@@ -4,40 +4,56 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\InvestmentPlan;
-use Livewire\WithValidation;
 
 class AdminAddInvestmentPlanComponent extends Component
 {
-    use WithValidation;
-
     public $name;
     public $price;
     public $percentage;
     public $duration;
     public $is_active;
 
-
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required|min:3',
+            'price' => 'required|integer',
+            'percentage' => 'required|integer',
+            'duration' => 'required|integer',
+            'is_active' => 'required'
+        ]);
+    }
 
     public function storePlan()
     {
         $this->validate([
-            'name'=>'required|min:3',
-            'price'=>'required',
-            'percentage'=>'required',
-            'is_active;'=>'required'
+            'name' => 'required|min:3|unique:investment_plans,name',
+            'price' => 'required|integer',
+            'percentage' => 'required|integer',
+            'duration' => 'required|integer',
+            'is_active' => 'required'
 
         ]);
 
         $plan = new InvestmentPlan;
-        $plan->name = $name;
-        $plan->price = $price;
-        $plan->percentage = $percentage;
-        $plan->duration = $duration;
-        $plan->is_active = $is_active;
+        $plan->name = $this->name;
+        $plan->price = $this->price;
+        $plan->percentage = $this->percentage;
+        $plan->duration = $this->duration;
+        $plan->is_active = $this->is_active;
         $plan->save();
-        session()->flash('message', 'Category has been created successfully!');
+        session()->flash('message', 'Investment Plan has been created successfully!');
+        $this->resetForm();
+        return redirect()->route('admin.investment-plans');
+    }
 
-        $this->render();
+    public function resetForm()
+    {
+        $this->name = '';
+        $this->price = '';
+        $this->percentage = '';
+        $this->duration = '';
+        $this->is_active = '';
     }
 
     public function render()

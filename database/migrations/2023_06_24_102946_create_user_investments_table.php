@@ -16,8 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('investment_plan_id');
             $table->integer('duration')->default('7');
-            $table->float('amount');
-            $table->boolean('is_active')->default(true);
+            $table->decimal('amount', 10, 2)->default(0);
+
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_completed')->default(false);
 
             $table->timestamps();
 

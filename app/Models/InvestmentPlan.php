@@ -12,4 +12,16 @@ class InvestmentPlan extends Model
 
     protected $table = 'investment_plans';
 
+    public function investment()
+    {
+        return $this->hasMany(UserInvestment::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+
+
 }

@@ -10,4 +10,14 @@ class Transaction extends Model
     use HasFactory;
 
     protected $table = 'transactions';
+
+    public function investmentPlan()
+    {
+        return $this->belongsTo(InvestmentPlan::class, 'investment_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

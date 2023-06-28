@@ -16,7 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('mode');
             $table->string('type');
-            $table->integer('amount');
+
+            $table->decimal('amount', 10, 2)->default(0);
+
             $table->string('status');
             $table->unsignedBigInteger('investment_id');
             $table->timestamps();

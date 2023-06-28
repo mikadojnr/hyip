@@ -10,6 +10,7 @@
     <!-- Bootstrap CSS -->
     <link type="text/css" rel="stylesheet" media="all" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
 
+
     <!-- Vendor/Plugins CSS -->
     <link type="text/css" rel="stylesheet" media="all" href="{{ asset('vendor/animate-css/animate.min.css') }}">
     <link type="text/css" rel="stylesheet" media="all" href="{{ asset('vendor/slick/slick.css') }}">
@@ -116,10 +117,15 @@
                                 @if(Auth::user()->utype === 'ADM')
                                     <li class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            My Account ({{Auth::user()->name}})
+                                            My Account ({{Str::title(Auth::user()->name)}})
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a href="{{ route('admin.dashboard')}}" class="dropdown-item">Dashboard</a>
+
+                                            <a href="{{route('admin.view-admins')}}" class="dropdown-item">Admins</a>
+                                            <a href="{{route('admin.view-users')}}" class="dropdown-item">Users</a>
+                                            <a href="{{ route('admin.investment-plans')}}" class="dropdown-item">Investment Plans</a>
+                                            <a href="{{ route('admin.transactions')}}" class="dropdown-item">All Transactions</a>
 
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
@@ -133,10 +139,12 @@
                                 @else
                                     <li class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            My Account ({{Auth::user()->name}})
+                                            My Account ({{Str::title(Auth::user()->name)}})
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a href="{{ route('user.dashboard')}}" class="dropdown-item">Dashboard</a>
+                                            <a href="{{ route('user.detail',['user_id'=>Auth::user()->id])}}" class="dropdown-item">My Profile</a>
+                                            <a href="{{ route('user.investment-plans')}}" class="dropdown-item">Investment Plans</a>
 
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
@@ -190,7 +198,7 @@
                     <div class="col-md-6 col-xl-3 mb-30">
                         <h4 class="btm-sep pb-3 mb-30 c-white font-weight-semi-bolder">User</h4>
                         <div class="foot-links">
-                            <a href="/terms">Terms</a>
+
                             <a href="{{ route('contact')}}">Contact Us</a>
                             @guest
                                 <a href="{{ route('login')}}">Log In</a>
@@ -254,8 +262,9 @@
     <script src="{{ asset('vendor/wowjs/wow.min.js') }}"></script>
 
     <script src="{{ asset('js/main.js') }}"></script>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
+
+    <!--Start of Tawk.to Script-->
+{{-- <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -265,5 +274,8 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
-</script>
-<!--End of Tawk.to Script--></body>
+</script> --}}
+<!--End of Tawk.to Script-->
+
+@livewireScripts
+</body>

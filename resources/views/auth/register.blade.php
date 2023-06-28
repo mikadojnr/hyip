@@ -204,19 +204,27 @@
 
                                     <x-validation-errors class="mb-4" style="color: red;"/>
 
+                                    @if(Session::has('error_message'))
+                                        <p class="alert alert-danger">{{Session::get('error_message')}}</p>
+                                    @endif
+
                                     <form method="POST" name="regform" id="regform" class="form" action="{{ route('register') }}">
 
                                         @csrf
                                         <div class="row">
 
                                             <div class="col-12">
+                                                <label for="" class="col-md-4 control-label">Name</label>
+
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-account"></span>
-                                                    <input id="name" type="text" name="name" class="form-control" placeholder="Full name" :value="old('name')" required autofocus autocomplete="name">
+                                                    <input id="name" type="text" name="name" class="form-control" placeholder="Full name" :value="old('name')" required  autocomplete="name">
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
+                                                <label for="" class="col-md-4 control-label">Email</label>
+
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-account"></span>
                                                     <input id="email" type="email" name="email" class="form-control" placeholder="Email" :value="old('email')" required autocomplete="username"/>
@@ -224,6 +232,8 @@
                                             </div>
 
                                             <div class="col-12">
+                                                <label for="" class="col-md-4 control-label">Password</label>
+
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-key"></span>
                                                     <input id="password" type="password" name="password"  class="form-control" placeholder="Password"  name="password" required autocomplete="new-password">
@@ -231,6 +241,8 @@
                                             </div>
 
                                             <div class="col-12">
+                                                <label for="" class="col-md-4 control-label">Confirm&nbsp;Password</label>
+
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-key"></span>
                                                     <input id="password_confirmation" type="password" name="password_confirmation" value='' class="form-control" placeholder="Retype Password"name="password_confirmation" required autocomplete="new-password">
@@ -238,7 +250,17 @@
                                             </div>
 
                                             <div class="col-12">
-                                                <input type=checkbox name="agree" id="agree"> I agree with <a href="">Terms and Conditions</a>
+                                                <label for="" class="col-md-4 control-label">Referral&nbsp;Code</label>
+
+                                                <div class="form-group position-relative">
+                                                    <span class="zmdi zmdi-key"></span>
+                                                    <input id="referrer" type="text" name="referrer" wire:model="referral_code" class="form-control">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                {{-- <input type=checkbox name="agree" id="agree" > I agree with <a href="">Terms and Conditions</a> --}}
                                                 <button type="submit" value="Register" class="btn btn-lg btn-custom btn-dark btn-block">
                                                     Sign Up
                                                 </button>

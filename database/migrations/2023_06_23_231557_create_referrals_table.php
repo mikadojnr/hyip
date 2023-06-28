@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('referrals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('referrer_id');
-            $table->unsignedBigInteger('referred_id');
+            $table->unsignedBigInteger('referee_id');
+            $table->decimal('referral_amount', 10, 2)->default(0);
             $table->timestamps();
 
             $table->foreign('referrer_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('referred_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('referee_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

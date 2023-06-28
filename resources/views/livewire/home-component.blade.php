@@ -1,4 +1,4 @@
-<div>
+<div class="bg-light">
     <!-- START Section Hero -->
     <section class="breadcrumb-section">
        <div class="banner position-relative">
@@ -125,172 +125,40 @@
                <div role="tabpanel" class="tab-pane fade show active" id="yearly">
                    <div class="row justify-content-center">
 
-                        <div class="col-md-6 col-lg-4 mb-30">
-                           <div class="price-item text-center">
-                               <div class="">
-                                   <h2>10%</h2>
-                                   <h4 class="mb-0 plan_name">Pink Diamond</h4>
-                               </div>
-                               <div class="price-content">
-                                   <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black plan-price"><b>Amount: 10 USDT</b></span>
-                                        </li>
-                                       <li>
-                                           <i class="zmdi zmdi-check mr-2"></i>
-                                           <span class="c-black">Profit 20%</span>
-                                       </li>
-
-                                       <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">7 Days Plan</span>
-                                       </li>
-
-                                   </ul>
-                                   @guest
-                                        <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
-                                   @else
-                                        <a href="/payment" class="btn btn-custom">Invest Now</a>
-                                   @endguest
-
-                                </div>
-                           </div>
-                       </div>
-
+                        @foreach ($plans as $plan )
                         <div class="col-md-6 col-lg-4 mb-30">
                             <div class="price-item text-center">
                                 <div class="">
-                                    <h2>20%</h2>
-                                    <h4 class="mb-0 plan_name">JADEITE</h4>
+                                    <h2>{{$plan->percentage}}%</h2>
+                                    <h4 class="mb-0 plan_name">{{$plan->name}}</h4>
                                 </div>
                                 <div class="price-content">
                                     <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
+                                         <li>
+                                             <i class="zmdi zmdi-check mr-2"></i>
+                                             <span class="c-black plan-price"><b>Amount: {{$plan->price}} USDT</b></span>
+                                         </li>
                                         <li>
                                             <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black plan-price"><b>Amount: 20 USDT</b></span>
-                                        </li>
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">Profit 20%</span>
+                                            <span class="c-black">Profit {{$plan->percentage}}%</span>
                                         </li>
 
                                         <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">7 Days Plan</span>
+                                             <i class="zmdi zmdi-check mr-2"></i>
+                                             <span class="c-black">7 Days Plan</span>
                                         </li>
 
                                     </ul>
                                     @guest
-                                        <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
+                                         <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
                                     @else
-                                        <a href="/payment" class="btn btn-custom">Invest Now</a>
+                                         <a class="btn btn-custom" href="{{route('user.payment',['plan_id'=>$plan->id])}}">Invest Now</a>
                                     @endguest
 
-                                </div>
+                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 col-lg-4 mb-30">
-                            <div class="price-item text-center">
-                                <div class="">
-                                    <h2>25%</h2>
-                                    <h4 class="mb-0 plan_name">BIXBITE</h4>
-                                </div>
-                                <div class="price-content">
-                                    <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black plan-price"><b>Amount: 50 USDT</b></span>
-                                        </li>
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">Profit 25%</span>
-                                        </li>
-
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">7 Days Plan</span>
-                                        </li>
-
-                                    </ul>
-                                    @guest
-                                        <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
-                                    @else
-                                        <a href="/payment" class="btn btn-custom">Invest Now</a>
-                                    @endguest
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-4 mb-30">
-                            <div class="price-item text-center">
-                                <div class="">
-                                    <h2>30%</h2>
-                                    <h4 class="mb-0 plan_name">MUSGRAVITE</h4>
-                                </div>
-                                <div class="price-content">
-                                    <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black plan-price"><b>Amount: 100 USDT</b></span>
-                                        </li>
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">Profit 30%</span>
-                                        </li>
-
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">7 Days Plan</span>
-                                        </li>
-
-                                    </ul>
-                                    @guest
-                                        <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
-                                    @else
-                                        <a href="/payment" class="btn btn-custom">Invest Now</a>
-                                    @endguest
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-4 mb-30">
-                            <div class="price-item text-center">
-                                <div class="">
-                                    <h2>30%</h2>
-                                    <h4 class="mb-0 plan_name">ALEXANDRITE</h4>
-                                </div>
-                                <div class="price-content">
-                                    <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black plan-price"><b>Amount: 200 USDT</b></span>
-                                        </li>
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">Profit 30%</span>
-                                        </li>
-
-                                        <li>
-                                            <i class="zmdi zmdi-check mr-2"></i>
-                                            <span class="c-black">7 Days Plan</span>
-                                        </li>
-
-                                    </ul>
-                                    @guest
-                                        <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
-                                    @else
-                                        <a href="/payment" class="btn btn-custom">Invest Now</a>
-                                    @endguest
-
-                                </div>
-                            </div>
-                        </div>
-
-
+                        @endforeach
 
                    </div>
                </div>
@@ -303,11 +171,11 @@
    <!-- END Section Pricing -->
 
    <!-- START Section Calculator -->
-   <section class="cta-section position-relative">
+   <section class="cta-section position-relative bg-light">
     <div class="container">
         <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
             <h3>Investment Profit Calculator</h3>
-        <div class="card mt-4">
+        <div class="card mt-4 bg-white">
             <div class="card-header">
                 <h5>Select an Investment Plan:</h5>
             </div>
@@ -438,7 +306,7 @@
    <section class="cta-section position-relative">
        <div class="container">
            <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
-               <h3>Investments</h3>
+               <h3>Latest Investments</h3>
                <div class="columns is-variable is-multiline is-centered">
                  <div class="column is-10">
 
@@ -454,16 +322,12 @@
                      </thead>
                      <tbody>
 
-
-                       <tr>
-                         <td>gildook</td>
-                         <td>$50.00</td>
-                       </tr>
-
-                       <tr>
-                         <td>nippon</td>
-                         <td>$5.00</td>
-                       </tr>
+                        @foreach ($user_investments as $user_investment)
+                        <tr>
+                            <td>{{$user_investment->user->name}}</td>
+                            <td>{{$user_investment->amount}} USDT</td>
+                          </tr>
+                        @endforeach
 
                       </tbody>
                    </table>
@@ -495,7 +359,7 @@
 
                        <tr>
                          <td>richgarancom</td>
-                         <td>$0.25</td>
+                         <td>200 USDT</td>
 
                        </tr>
 

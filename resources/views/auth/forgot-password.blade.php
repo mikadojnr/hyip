@@ -64,7 +64,7 @@
 
                                     <x-validation-errors class="mb-4" style="color: red"/>
 
-                                    <x-validation-errors class="mb-4" style="color: red;"/>
+
                                     <form method=POST name="mainform" onsubmit="return checkform()" class="form" action="{{ route('password.email') }}">
                                         @csrf
                                         <div class="row">

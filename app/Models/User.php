@@ -18,26 +18,41 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    public function user_details()
+    public function user_detail()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(UserDetail::class, 'user_id');
     }
 
-    public function transactions()
+    public function transaction()
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function investments()
+    public function investment()
     {
         return $this->hasMany(UserInvestment::class);
     }
 
-    public function referrals()
+    public function referrals(): HasMany
     {
         return $this->hasMany(Referral::class, 'referrer_id');
     }
 
+    public function referrer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'referrer_id');
+    }
+
+    public function referee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'referee_id');
+    }
+
+
+    public function generateReferralLink(): string
+    {
+        return route('register', ['ref' => $this->referral_code]);
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -48,6 +63,7 @@ class User extends Authenticatable
         'email',
         'password',
         'utype',
+        'referral_code',
     ];
 
     /**

@@ -3797,5 +3797,42 @@ textarea {
 }
 
 
+/* For Livwire Pagination */
+nav svg{
+    height: 20px;
+}
+nav .hidden{
+    display: block !important;
+}
+
+
+/* Set a fixed height for the sidebar and add some padding */
+.sidebar {
+    height: 100%;
+    padding: 20px;
+    }
+
+    /* Add a background color and some padding to the links */
+    .sidebar a {
+    display: block;
+    padding: 10px;
+    background-color: #f8f9fa;
+    color: #333;
+    }
+
+    /* Change the background color on hover */
+    .sidebar a:hover {
+    background-color: #e9ecef;
+    }
+
+    /* Style the active link */
+    .sidebar .active {
+    background-color: #007bff;
+    color: #fff;
+    }
+
+
+    /* Admin Dashboard */
+
 
 /*# sourceMappingURL=main.css.map*/

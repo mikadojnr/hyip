@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('investment_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('price');
+
+            $table->decimal('price', 10, 2)->default(0);
+
             $table->float('percentage');
             $table->integer('duration');
             $table->integer('is_active')->default(true);

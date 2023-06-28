@@ -1,4 +1,4 @@
-<div>
+<div class="bg-light">
 
     <!-- START Section Page Title -->
     <section class="breadcrumb-section">
@@ -49,7 +49,7 @@
 
             .icon-stat-value {
                 display: block;
-                font-size: 2rem;
+                font-size: 1.5rem;
                 font-weight: 600;
             }
             .icon-stat-visual {
@@ -81,46 +81,25 @@
             }
         </style>
 
-        <style>
-            /* Set a fixed height for the sidebar and add some padding */
-            .sidebar {
-            height: 100%;
-            padding: 20px;
-            }
-
-            /* Add a background color and some padding to the links */
-            .sidebar a {
-            display: block;
-            padding: 10px;
-            background-color: #f8f9fa;
-            color: #333;
-            }
-
-            /* Change the background color on hover */
-            .sidebar a:hover {
-            background-color: #e9ecef;
-            }
-
-            /* Style the active link */
-            .sidebar .active {
-            background-color: #007bff;
-            color: #fff;
-            }
-        </style>
-
         <div class="row">
-            <div class="col-lg-3 col-sm-12">
+            @if (Session::has('message'))
+                <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
+            @endif
+
+            {{-- <div class="col-lg-3 col-sm-12">
                 <div class="container">
                     <div class="sidebar">
-                        <a class="active" href="#">Home</a>
-                        <a href="#">Company Details</a>
-                        <a href="#">Users / Admins</a>
-                        <a href="{{ route('admin.investment-plans')}}">Investment Plans</a>
+
+                        <a href="{{route('admin.dashboard')}}" class="{{request()->is('admin/dashboard') ? 'active' : ''}}">Dashboard</a>
+                        <a href="{{route('admin.view-admins')}}" class="{{request()->is('admin/view-admin') ? 'active' : ''}}">Admins</a>
+                        <a href="{{route('admin.view-users')}}" class="{{request()->is('admin/view-user') ? 'active' : ''}}">Users</a>
+                        <a href="{{ route('admin.investment-plans')}}" class="{{request()->is('admin/investment-plans') ? 'active' : ''}}">Investment Plans</a>
+                        <a href="{{ route('admin.transactions')}}" class="{{request()->is('admin/transactions') ? 'active' : ''}}">All Transactions</a>
                       </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-lg-9 col-sm-12">
+            <div class="col-lg-12 col-sm-12">
                 <div class="container">
                     <div class="row">
                         <div class=" col-sm-6 col-lg-4">
@@ -130,8 +109,8 @@
                                 <span class="icon-stat-label">Deposits Today</span>
                                 <span class="icon-stat-value">{{$depositToday}} USDT</span>
                               </div>
-                              <div class="col-xs-4 text-center right">
-                                <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
+                              <div class="col-xs-4 text-center right" style="padding-left: 10px">
+                                <i class="fa fa-dollar icon-stat-visual bg-success text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -145,10 +124,10 @@
                               <div class="row">
                                 <div class="col-xs-8 text-left">
                                   <span class="icon-stat-label">Pending Deposits</span>
-                                  <span class="icon-stat-value">$0</span>
+                                  <span class="icon-stat-value">{{$pendingDeposit}}</span>
                                 </div>
-                                <div class="col-xs-4 text-center right">
-                                  <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
+                                <div class="col-xs-4 text-center right" style="padding-left: 10px">
+                                  <i class="fa fa-bar-chart icon-stat-visual bg-warning text-white"></i>
                                 </div>
                               </div>
                               <div class="icon-stat-footer">
@@ -162,9 +141,9 @@
                               <div class="row">
                                 <div class="col-xs-8 text-left">
                                   <span class="icon-stat-label">Total Amount Deposited</span>
-                                  <span class="icon-stat-value">$0</span>
+                                  <span class="icon-stat-value">{{$totalDeposit}} USDT</span>
                                 </div>
-                                <div class="col-xs-4 text-center right">
+                                <div class="col-xs-4 text-center right" style="padding-left: 10px">
                                   <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
                                 </div>
                               </div>
@@ -179,10 +158,10 @@
                             <div class="row">
                               <div class="col-xs-8 text-left">
                                 <span class="icon-stat-label">Pending Withdrawals</span>
-                                <span class="icon-stat-value">0</span>
+                                <span class="icon-stat-value">{{$pendingWithdrawal}}</span>
                               </div>
-                              <div class="col-xs-4 text-center">
-                                <i class="fa fa-gift icon-stat-visual bg-secondary"></i>
+                              <div class="col-xs-4 text-center" style="padding-left: 10px">
+                                <i class="fa fa-bar-chart icon-stat-visual bg-warning text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -196,9 +175,9 @@
                             <div class="row">
                               <div class="col-xs-8 text-left">
                                 <span class="icon-stat-label">Total Amount Withdrawn</span>
-                                <span class="icon-stat-value">$0</span>
+                                <span class="icon-stat-value">{{$totalWithdrawal}} USDT</span>
                               </div>
-                              <div class="col-xs-4 text-center">
+                              <div class="col-xs-4 text-center" style="padding-left: 10px">
                                 <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
                               </div>
                             </div>
@@ -213,10 +192,10 @@
                             <div class="row">
                               <div class="col-xs-8 text-left">
                                 <span class="icon-stat-label">Withdrawals Today</span>
-                                <span class="icon-stat-value">0</span>
+                                <span class="icon-stat-value">{{$witdrawalToday}} USDT</span>
                               </div>
-                              <div class="col-xs-4 text-center">
-                                <i class="fa fa-gift icon-stat-visual bg-secondary"></i>
+                              <div class="col-xs-4 text-center" style="padding-left: 10px">
+                                <i class="fa fa-bar-chart icon-stat-visual bg-success text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -228,53 +207,53 @@
                 </div>
 
                 <div class="container">
-                    <div class="cta-box bg-white">
+
+                    <div class="cta-box ">
                         <div class="col-md-12">
-                            <div class="card mt-4">
+                            <div class="card mt-4 bg-white">
                                 <div class="card-header">
                                     <h4 class="card-title">Pending Deposits</h4>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>A</th>
-                                                <th>B</th>
-                                                <th>C</th>
-                                                <th>D</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                                    <th>Mode</th>
+                                                    <th>Amount</th>
+                                                    <th>Investment Plan</th>
+                                                    <th>Approve</th>
+                                                    <th> View</th>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pendingDepositRecords as $pendingDepositRecord)
+                                                    <tr>
+                                                        <td>{{Str::title($pendingDepositRecord->user->name)}}</td>
 
-                                        </tbody>
-                                    </table>
+                                                        <td>{{Str::upper($pendingDepositRecord->mode)}}</td>
+                                                        <td>{{$pendingDepositRecord->amount}}</td>
+                                                        <td>{{$pendingDepositRecord->investmentPlan->name}}</td>
+                                                        {{-- <td>{{Str::title($pendingDepositRecord->status)}}</td> --}}
+                                                        <td>
+                                                            <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingDepositRecord->id}})">Approve</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingDepositRecord->id])}}" class="btn-sm btn-success">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -282,53 +261,49 @@
                 </div>
 
                 <div class="container">
-                    <div class="cta-box bg-white">
+                    <div class="cta-box ">
                         <div class="col-md-12">
-                            <div class="card mt-4">
+                            <div class="card mt-4 bg-white">
                                 <div class="card-header">
                                     <h4 class="card-title">Pending Withdrawals</h4>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>A</th>
-                                                <th>B</th>
-                                                <th>C</th>
-                                                <th>D</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                                    <th>Name</th>
+                                                    <th>Mode</th>
+                                                    <th>Amount</th>
+                                                    <th>Investment Plan</th>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
+                                                @foreach ($pendingWithdrawalRecords as $pendingWithdrawalRecord)
+                                                    <tr>
+                                                        <td>{{Str::title($pendingWithdrawalRecord->user->name)}}</td>
 
-                                        </tbody>
-                                    </table>
+                                                        <td>{{Str::upper($pendingWithdrawalRecord->mode)}}</td>
+                                                        <td>{{$pendingWithdrawalRecord->amount}}</td>
+                                                        <td>{{$pendingWithdrawalRecord->investmentPlan->name}}</td>
+                                                        <td>
+                                                            <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingWithdrawalRecord->id}})">Approve</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingWithdrawalRecord->id])}}" class="btn-sm btn-success">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -337,6 +312,7 @@
 
             </div>
         </div>
+
         {{-- <div class="container">
             <div class="cta-box bg-white">
                 <div class="col-md-12">
