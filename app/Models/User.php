@@ -33,26 +33,22 @@ class User extends Authenticatable
         return $this->hasMany(UserInvestment::class);
     }
 
-    public function referrals(): HasMany
+
+    public function referrer()
     {
-        return $this->hasMany(Referral::class, 'referrer_id');
+        return $this->hasMany(User::class, 'referrer_id');
     }
 
-    public function referrer(): BelongsTo
+    public function referee()
     {
-        return $this->belongsTo(User::class, 'referrer_id');
+        return $this->hasMany(User::class, 'referee_id');
     }
 
-    public function referee(): BelongsTo
+    public function withdrawalRequests()
     {
-        return $this->belongsTo(User::class, 'referee_id');
+        return $this->hasMany(WithdrawalRequest::class);
     }
 
-
-    public function generateReferralLink(): string
-    {
-        return route('register', ['ref' => $this->referral_code]);
-    }
     /**
      * The attributes that are mass assignable.
      *

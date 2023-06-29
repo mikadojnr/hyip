@@ -12,6 +12,9 @@ use App\Models\InvestmentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use App\Http\Livewire\Admin\AdminTransactionDetailComponent;
+
+
 
 
 class PaymentComponent extends Component
@@ -43,6 +46,7 @@ class PaymentComponent extends Component
         $this->get_duration = $plan->duration;
 
 
+
     }
 
     public function initiateInvestment() {
@@ -54,14 +58,6 @@ class PaymentComponent extends Component
         $transaction->amount = $this->get_price;
         $transaction->investment_id = $this->get_planId;
         $transaction->save();
-
-        $investment = new UserInvestment;
-        $investment->user_id = Auth::user()->id;
-        $investment->investment_plan_id = $this->get_planId;
-        $investment->duration = $this->get_duration;
-        $investment->amount = $this->get_price;
-        $investment->amount = 0;
-        $investment->save();
 
         session()->flash('message', 'Your Payment is being processed!');
 

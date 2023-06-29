@@ -66,6 +66,7 @@
                                         <th>Mode</th>
                                         <th>Status</th>
                                         <th>Date</th>
+                                        <th>View</th>
 
 
 
@@ -79,7 +80,7 @@
                                         <tr class="alert-success ">
 
                                             <td>{{$transaction->user->name}}</td>
-                                            <td>{{$transaction->investmentPlan->name}}</td>
+                                            <td>{{Str::title($transaction->investmentPlan->name)}}</td>
                                             <td>{{$transaction->amount}}</td>
                                             <td>{{Str::upper($transaction->mode)}}</td>
                                             <td>{{Str::title($transaction->status)}}</td>
@@ -98,7 +99,7 @@
 
                                         <tr class="alert-danger">
                                             <td>{{$transaction->user->name}}</td>
-                                            <td>{{$transaction->investmentPlan->name}}</td>
+                                            <td>{{Str::title($transaction->investmentPlan->name)}}</td>
                                             <td>{{$transaction->amount}}</td>
                                             <td>{{Str::upper($transaction->mode)}}</td>
                                             <td>{{Str::title($transaction->status)}}</td>

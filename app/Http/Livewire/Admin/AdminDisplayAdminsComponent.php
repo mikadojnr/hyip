@@ -44,7 +44,8 @@ class AdminDisplayAdminsComponent extends Component
             ->get();
         }
         else {
-            $admins = User::where('utype','ADM')->where('id', '!=', Auth::user()->id)->paginate(20);
+            $admins = User::where('utype','ADM')->where('id', '!=', Auth::user()->id)
+            ->orderBy('created_at', 'desc')->paginate(20);
         }
 
         return view('livewire.admin.admin-display-admins-component',[

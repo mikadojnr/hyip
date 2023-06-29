@@ -1,4 +1,4 @@
-<div class="bg-light">
+<div class="bg-light" wire:init="updateReferralAmount">
 
     <!-- START Section Page Title -->
     <section class="breadcrumb-section">
@@ -8,6 +8,7 @@
                     <h2 class="text-uppercase mb-4 c-white">DashBoard</h2>
                     <ul class="breadcrumb mb-0 justify-content-center">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ul>
                 </div>
@@ -81,10 +82,11 @@
             }
         </style>
 
+        @if (Session::has('message'))
+        <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
+        @endif
         <div class="row">
-            @if (Session::has('message'))
-                <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
-            @endif
+
 
             {{-- <div class="col-lg-3 col-sm-12">
                 <div class="container">
@@ -110,14 +112,19 @@
                                 <div class="row">
 
                                     <div class="col-xl-6 col-md-6">
-                                        <div class="card-box  p-4 m-2 bg-white shadow">
+                                        <div class="card-box  p-4 m-2 alert-primary shadow">
 
                                             <strong class="header-title mt-0 mb-3">Account Balance</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
-                                                    <i class="fa fa-dollar fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
-                                                    <h4 class="">0.00 USDT</h4>
-                                                    <p class="text-muted mb-3">Investment Earning</p>
+                                                    <i class="fas fa-coins fa-4x pull-left text-primary" aria-hidden="true"  style="position: relative; padding-top:15px;"></i>
+                                                    @if($currentBalance)
+                                                        <h4 class="">{{$currentBalance}} USDT</h4>
+                                                    @else
+                                                        <h4 class="">0.00 USDT</h4>
+                                                    @endif
+
+                                                    <p class="text-muted mb-3">Pending&nbsp;Withdrawal</p>
                                                 </div>
 
                                             </div>
@@ -125,12 +132,12 @@
                                     </div><!-- end col -->
 
                                     <div class="col-xl-6 col-md-6">
-                                        <div class="card-box  p-4 m-2 bg-white shadow" >
+                                        <div class="card-box  p-4 m-2 alert-success shadow" >
 
                                             <strong class="header-title mt-0 mb-3">Total Amount Earned</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
-                                                    <i class="fa fa-dollar fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
+                                                    <i class=" fas fa-money-bill fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
                                                     @if($totalAmountEarned)
                                                         <h4 class="">{{$totalAmountEarned}} USDT</h4>
                                                     @else
@@ -144,12 +151,12 @@
                                     </div><!-- end col -->
 
                                     <div class="col-xl-6 col-md-6">
-                                        <div class="card-box  p-4 m-2 bg-white shadow">
+                                        <div class="card-box  p-4 m-2 alert-warning shadow">
 
                                             <strong class="header-title mt-0 mb-3">Active Investment</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
-                                                    <i class="fa fa-dollar fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
+                                                    <i class=" 	fas fa-chart-line fa-4x pull-left text-warning" style="position: relative; padding-top:15px;"></i>
                                                     <h4 class="">$0.00 </h4>
                                                     <p class="text-muted mb-3">Current Investment</p>
                                                 </div>
@@ -159,12 +166,12 @@
                                     </div><!-- end col -->
 
                                     <div class="col-xl-6 col-md-6">
-                                        <div class="card-box  p-4 m-2 bg-white shadow">
+                                        <div class="card-box  p-4 m-2 alert-danger shadow">
 
                                             <strong class="header-title mt-0 mb-3">Total Withdrawals</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
-                                                    <i class="fa fa-dollar fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
+                                                    <i class="fa fa-credit-card fa-4x pull-left text-danger" aria-hidden="true" style="position: relative; padding-top:15px;"></i>
                                                     @if($totalWithdrawal)
                                                         <h4 class="">{{$totalWithdrawal}} USDT</h4>
                                                     @else
@@ -247,7 +254,12 @@
                                                             <div class="widget-box-2">
                                                                 <div class="widget-detail-2 text-right">
                                                                     <i class="fa fa-users fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
-                                                                    <h4 class="">200 </h4>
+                                                                    @if ($totalReferrals)
+                                                                    <h4 class="">{{$totalReferrals}} </h4>
+                                                                    @else
+                                                                    <h4 class="">0 </h4>
+                                                                    @endif
+
                                                                     <p class="text-muted mb-3">Referrals</p>
                                                                 </div>
 
@@ -261,9 +273,13 @@
                                                             <strong class="header-title mt-0 mb-3">Total Referral Earnings</strong>
                                                             <div class="widget-box-2">
                                                                 <div class="widget-detail-2 text-right">
-                                                                    <i class="fa fa-users fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
-                                                                    <h4 class="">200 USDT</h4>
-                                                                    <p class="text-muted mb-3">Referral Earning</p>
+                                                                    <i class="fas fa-gift fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
+                                                                    @if ($totalReferralAmount)
+                                                                        <h4 class="">{{$totalReferralAmount}} USDT</h4>
+                                                                    @else
+                                                                        <h4 class="">0.00 USDT</h4>
+                                                                    @endif
+                                                                    <p class="text-muted mb-3">Earning</p>
                                                                 </div>
 
                                                             </div>

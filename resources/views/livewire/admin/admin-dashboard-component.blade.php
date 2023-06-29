@@ -80,11 +80,11 @@
                 border-top: 1px solid #eee;
             }
         </style>
-
+        @if (Session::has('message'))
+            <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
+        @endif
         <div class="row">
-            @if (Session::has('message'))
-                <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
-            @endif
+
 
             {{-- <div class="col-lg-3 col-sm-12">
                 <div class="container">
@@ -102,22 +102,23 @@
             <div class="col-lg-12 col-sm-12">
                 <div class="container">
                     <div class="row">
+
                         <div class=" col-sm-6 col-lg-4">
-                          <div class="icon-stat">
-                            <div class="row">
-                              <div class="col-xs-8 text-left">
-                                <span class="icon-stat-label">Deposits Today</span>
-                                <span class="icon-stat-value">{{$depositToday}} USDT</span>
+                            <div class="icon-stat">
+                              <div class="row">
+                                <div class="col-xs-8 text-left">
+                                  <span class="icon-stat-label">Deposits Today</span>
+                                  <span class="icon-stat-value">{{$depositToday}} USDT</span>
+                                </div>
+                                <div class="col-xs-4 text-center right" style="padding-left: 10px">
+                                  <i class="fas fa-coins icon-stat-visual bg-primary text-white"></i>
+                                </div>
                               </div>
-                              <div class="col-xs-4 text-center right" style="padding-left: 10px">
-                                <i class="fa fa-dollar icon-stat-visual bg-success text-white"></i>
+                              <div class="icon-stat-footer">
+                                <i class="fa fa-clock-o"></i> Updated Now
                               </div>
-                            </div>
-                            <div class="icon-stat-footer">
-                              <i class="fa fa-clock-o"></i> Updated Now
                             </div>
                           </div>
-                        </div>
 
                         <div class=" col-sm-6 col-lg-4">
                             <div class="icon-stat">
@@ -127,7 +128,7 @@
                                   <span class="icon-stat-value">{{$pendingDeposit}}</span>
                                 </div>
                                 <div class="col-xs-4 text-center right" style="padding-left: 10px">
-                                  <i class="fa fa-bar-chart icon-stat-visual bg-warning text-white"></i>
+                                  <i class="fas fa-hourglass-half icon-stat-visual bg-warning text-white"></i>
                                 </div>
                               </div>
                               <div class="icon-stat-footer">
@@ -144,7 +145,7 @@
                                   <span class="icon-stat-value">{{$totalDeposit}} USDT</span>
                                 </div>
                                 <div class="col-xs-4 text-center right" style="padding-left: 10px">
-                                  <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
+                                  <i class="fas fa-credit-card icon-stat-visual bg-success text-white"></i>
                                 </div>
                               </div>
                               <div class="icon-stat-footer">
@@ -161,7 +162,7 @@
                                 <span class="icon-stat-value">{{$pendingWithdrawal}}</span>
                               </div>
                               <div class="col-xs-4 text-center" style="padding-left: 10px">
-                                <i class="fa fa-bar-chart icon-stat-visual bg-warning text-white"></i>
+                                <i class="fas fa-hourglass-half icon-stat-visual bg-warning text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -178,7 +179,7 @@
                                 <span class="icon-stat-value">{{$totalWithdrawal}} USDT</span>
                               </div>
                               <div class="col-xs-4 text-center" style="padding-left: 10px">
-                                <i class="fa fa-dollar icon-stat-visual bg-primary"></i>
+                                <i class="fa fa-dollar icon-stat-visual bg-danger text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -192,10 +193,10 @@
                             <div class="row">
                               <div class="col-xs-8 text-left">
                                 <span class="icon-stat-label">Withdrawals Today</span>
-                                <span class="icon-stat-value">{{$witdrawalToday}} USDT</span>
+                                <span class="icon-stat-value">{{$withdrawalToday}} USDT</span>
                               </div>
                               <div class="col-xs-4 text-center" style="padding-left: 10px">
-                                <i class="fa fa-bar-chart icon-stat-visual bg-success text-white"></i>
+                                <i class="fa fa-bar-chart icon-stat-visual bg-danger text-white"></i>
                               </div>
                             </div>
                             <div class="icon-stat-footer">
@@ -237,7 +238,7 @@
 
                                                         <td>{{Str::upper($pendingDepositRecord->mode)}}</td>
                                                         <td>{{$pendingDepositRecord->amount}}</td>
-                                                        <td>{{$pendingDepositRecord->investmentPlan->name}}</td>
+                                                        <td>{{Str::title($pendingDepositRecord->investmentPlan->name)}}</td>
                                                         {{-- <td>{{Str::title($pendingDepositRecord->status)}}</td> --}}
                                                         <td>
                                                             <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingDepositRecord->id}})">Approve</a>
@@ -288,7 +289,7 @@
 
                                                         <td>{{Str::upper($pendingWithdrawalRecord->mode)}}</td>
                                                         <td>{{$pendingWithdrawalRecord->amount}}</td>
-                                                        <td>{{$pendingWithdrawalRecord->investmentPlan->name}}</td>
+                                                        <td>{{Str::title($pendingWithdrawalRecord->investmentPlan->name)}}</td>
                                                         <td>
                                                             <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingWithdrawalRecord->id}})">Approve</a>
                                                         </td>

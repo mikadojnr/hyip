@@ -4,17 +4,18 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Transaction;
+use App\Models\Referral;
 use Carbon\Carbon;
+
+use App\Http\Livewire\Admin\AdminTransactionDetailComponent;
 
 class AdminDashboardComponent extends Component
 {
     public function approveTransaction($id) {
-        $trans = Transaction::find($id);
-        $trans->status = 'approved';
-        $trans->save();
-        session()->flash('message','Transaction has been updated succesfully!');
-        return redirect()->route('admin.dashboard');
+        $AdminTransactionDetailComponent = new AdminTransactionDetailComponent();
+        return $AdminTransactionDetailComponent->approveTransaction($id);
     }
+
 
     public function render()
     {
@@ -57,7 +58,7 @@ class AdminDashboardComponent extends Component
             'pendingDeposit'=>$pendingDeposit,
             'totalDeposit'=>$totalDeposit,
             'pendingWithdrawal'=>$pendingWithdrawal,
-            'witdrawalToday'=>$withdrawalToday,
+            'withdrawalToday'=>$withdrawalToday,
             'totalWithdrawal'=>$totalWithdrawal,
 
             'pendingDepositRecords'=>$pendingDepositRecords,

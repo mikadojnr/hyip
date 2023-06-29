@@ -150,9 +150,16 @@
                 </div>
 
                 <div class="card-footer">
+
                     <div class="pull-right">
-                        <a href="{{route('admin.transaction-details',['transaction_id'=>$transaction_id])}}" wire:click.prevent="changeStatus({{$transaction->id}})" class="btn {{$transaction->status == 'pending' ? 'btn-success' :  'btn-warning'}}">{{$transaction->status == 'pending' ? 'Approve' :  'Pending'}}</a>
+                        @if($transaction->status === 'pending')
+                            <a href="" wire:click.prevent="approveTransaction({{$transaction->id}})" class="btn btn-success">Approve</a>
+                        @elseif($transaction->status === 'approved')
+                        <a href="" wire:click.prevent="makeTransactionPending({{$transaction->id}})" class="btn btn-warning">Make Pending</a>
+
+                        @endif
                     </div>
+
                 </div>
             </div>
         </div>

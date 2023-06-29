@@ -7,6 +7,8 @@
                     <h2 class="text-uppercase mb-4 c-white">INVESTMENT PLANS</h2>
                     <ul class="breadcrumb mb-0 justify-content-center">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('user.dashboard')}}">Dashboard</a></li>
+
                         <li class="breadcrumb-item active">Investment Plans</li>
                     </ul>
                 </div>

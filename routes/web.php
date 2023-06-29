@@ -28,7 +28,11 @@ use App\Http\Livewire\Admin\AdminTransactionDetailComponent;
 use App\Http\Livewire\User\UserDashboardComponent;
 use App\Http\Livewire\User\UserInvestmentPlanComponent;
 use App\Http\Livewire\User\PaymentComponent;
-use App\Http\Livewire\User\UserDetailComponent;
+use App\Http\Livewire\User\UserReferralsComponent;
+use App\Http\Livewire\User\UserTransactionComponent;
+use App\Http\Livewire\User\UserProfileComponent;
+
+
 
 
 Route::get('/', HomeComponent::class)->name('home');
@@ -54,6 +58,10 @@ Route::middleware(['auth:sanctum', 'verified', 'authuser'])->group(function () {
     Route::get('user/dashboard', UserDashboardComponent::class)->name('user.dashboard');
     Route::get('user/investment-plans', UserInvestmentPlanComponent::class)->name('user.investment-plans');
     Route::get('user/payment/{plan_id}', PaymentComponent::class)->name('user.payment');
-    Route::get('user/{user_id}', UserDetailComponent::class)->name('user.detail');
+    Route::get('user/referrals', UserReferralsComponent::class)->name('user.referrals');
+    Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
+    Route::get('user/transactions', UserTransactionComponent::class)->name('user.transactions');
+
+
 });
 

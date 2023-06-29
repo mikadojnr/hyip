@@ -41,7 +41,7 @@ class AdminDisplayUsersComponent extends Component
             ->get();
         }
         else {
-            $users = User::where('utype','USR')->paginate(20);
+            $users = User::where('utype','USR')->orderBy('created_at', 'desc')->paginate(20);
         }
 
 

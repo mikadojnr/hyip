@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\User;
 
 use Livewire\Component;
+
 use App\Models\User;
 use App\Models\UserDetail;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class UserDetailComponent extends Component
+class UserProfileComponent extends Component
 {
     public $user_id;
 
@@ -67,9 +68,8 @@ class UserDetailComponent extends Component
         }
         return redirect()->route('user.detail',['user_id'=>Auth::user()->id]);
     }
-
     public function render()
     {
-        return view('livewire.user.user-detail-component')->layout('layouts.base');
+        return view('livewire.user.user-profile-component')->layout('layouts.base');
     }
 }

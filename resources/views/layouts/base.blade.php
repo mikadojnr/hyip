@@ -25,6 +25,10 @@
 
     {{-- font-awesome-4.7.0 --}}
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 
     <title>Edgepool Investment</title>
@@ -143,8 +147,10 @@
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a href="{{ route('user.dashboard')}}" class="dropdown-item">Dashboard</a>
-                                            <a href="{{ route('user.detail',['user_id'=>Auth::user()->id])}}" class="dropdown-item">My Profile</a>
+                                            <a href="{{ route('user.profile',['user_id'=>Auth::user()->id])}}" class="dropdown-item">My Profile</a>
                                             <a href="{{ route('user.investment-plans')}}" class="dropdown-item">Investment Plans</a>
+                                            <a href="{{ route('user.referrals')}}" class="dropdown-item">Referrals</a>
+                                            <a href="{{ route('user.transactions')}}" class="dropdown-item">Transactions</a>
 
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
