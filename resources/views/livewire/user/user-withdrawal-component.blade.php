@@ -5,12 +5,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-uppercase mb-4 c-white">Make Payment</h2>
+                    <h2 class="text-uppercase mb-4 c-white">Request Withdrawal</h2>
                     <ul class="breadcrumb mb-0 justify-content-center">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{route('user.dashboard')}}">Dashboard</a></li>
-
-                        <li class="breadcrumb-item active">Payment</li>
+                        <li class="breadcrumb-item active">Withdrawal</li>
                     </ul>
                 </div>
             </div>
@@ -25,7 +24,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="pull-left">Make Payment</h4>
+                                <h4 class="pull-left">Request Withdrawal</h4>
                             </div>
 
                         </div>

@@ -31,6 +31,7 @@ use App\Http\Livewire\User\PaymentComponent;
 use App\Http\Livewire\User\UserReferralsComponent;
 use App\Http\Livewire\User\UserTransactionComponent;
 use App\Http\Livewire\User\UserProfileComponent;
+use App\Http\Livewire\User\UserWithdrawalComponent;
 
 
 
@@ -61,6 +62,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authuser'])->group(function () {
     Route::get('user/referrals', UserReferralsComponent::class)->name('user.referrals');
     Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
     Route::get('user/transactions', UserTransactionComponent::class)->name('user.transactions');
+    Route::get('user/withdrawal/{transaction_id}', UserWithdrawalComponent::class)->name('user.withdrawal');
 
 
 });

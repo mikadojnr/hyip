@@ -56,12 +56,12 @@
                         <div class="row">
 
                             <div class="col-xl-6 col-md-6">
-                                <div class="card-box  p-4 m-2 bg-light" style="border-radius: 5px;">
+                                <div class="card-box  p-4 m-2 alert-primary" style="border-radius: 5px;">
 
                                     <strong class="header-title mt-0 mb-3">Number of Referrals</strong>
                                     <div class="widget-box-2">
                                         <div class="widget-detail-2 text-right">
-                                            <i class="fa fa-users fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
+                                            <i class="fa fa-users fa-4x pull-left text-primary"  style="position: relative; padding-top:15px;"></i>
                                             @if ($totalReferrals)
                                             <h4 class="">{{$totalReferrals}} </h4>
                                             @else
@@ -76,7 +76,7 @@
                             </div><!-- end col -->
 
                             <div class="col-xl-6 col-md-6">
-                                <div class="card-box  p-4 m-2 bg-light" style="border-radius: 5px;">
+                                <div class="card-box  p-4 m-2 alert-success" style="border-radius: 5px;">
 
                                     <strong class="header-title mt-0 mb-3">Total Referral Earnings</strong>
                                     <div class="widget-box-2">

@@ -134,11 +134,9 @@
                     <div class="form-group">
                     <select class="form-control" id="investmentSelect">
                         <option value="">-- Select --</option>
-                        <option value="investment1">PINK DIAMOND</option>
-                        <option value="investment2">JADEITE</option>
-                        <option value="investment3">BIXBITE</option>
-                        <option value="investment4">MUSGRAVITE</option>
-                        <option value="investment5">ALEXANDRITE</option>
+                        @foreach($plans as $plan)
+                            <option value="{{ $plan->id }}">{{ Str::title($plan->name) }}</option>
+                        @endforeach
                     </select>
                     </div>
                     <strong><div id="result" class="center"></div></strong>
@@ -153,38 +151,30 @@
 
         <script>
             function calculateReturn() {
-            var investmentSelect = document.getElementById('investmentSelect');
-            var selectedInvestment = investmentSelect.value;
-            var resultElement = document.getElementById('result');
+          var investmentSelect = document.getElementById('investmentSelect');
+          var selectedInvestment = investmentSelect.value;
+          var resultElement = document.getElementById('result');
 
-            switch (selectedInvestment) {
-                case 'investment1':
-                calculateInvestmentReturn(10, 20);
-                break;
-                case 'investment2':
-                calculateInvestmentReturn(20, 20);
-                break;
-                case 'investment3':
-                calculateInvestmentReturn(50, 25);
-                break;
-                case 'investment4':
-                calculateInvestmentReturn(100, 30);
-                break;
-                case 'investment5':
-                calculateInvestmentReturn(200, 30);
-                break;
-                default:
-                resultElement.innerHTML = 'Select a Plan!';
-                break;
-            }
-            }
+          switch (selectedInvestment) {
 
-            function calculateInvestmentReturn(investmentAmount, profitPercentage) {
-            var returnAmount = investmentAmount * (profitPercentage / 100);
-            var totalAmount = investmentAmount + returnAmount;
-            var resultElement = document.getElementById('result');
-            resultElement.innerHTML = 'Return after 7 days will be ' + totalAmount.toFixed(2) + ' USDT';
-            }
+            @foreach ($plans as $plan)
+                case '{{ $plan->id }}':
+                calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
+                break;
+            @endforeach
+
+            default:
+              resultElement.innerHTML = 'Select a Plan!';
+              break;
+          }
+        }
+
+        function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
+          var returnAmount = investmentAmount * (profitPercentage / 100);
+          var totalAmount = investmentAmount + returnAmount;
+          var resultElement = document.getElementById('result');
+          resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
+        }
         </script>
         </section>
         <!-- END Section Calculator-->

@@ -17,6 +17,7 @@ class UserInvestment extends Model
         'is_active',
         'is_completed',
         'transaction_id',
+        'profit',
     ];
 
     protected $table = 'user_investments';
@@ -28,7 +29,7 @@ class UserInvestment extends Model
 
     public function investmentPlan()
     {
-        return $this->belongsTo(InvestmentPlan::class);
+        return $this->belongsTo(InvestmentPlan::class, 'investment_plan_id');
     }
 
     public function transaction()

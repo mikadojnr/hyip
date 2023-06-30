@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2)->default(0);
 
             $table->string('status');
-            $table->unsignedBigInteger('investment_id');
+            $table->unsignedBigInteger('investment_plan_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

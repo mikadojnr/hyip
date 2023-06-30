@@ -18,12 +18,19 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/';
+    public const ADM = '/admin/dashboard';
+    public const USR = '/user/dashboard';
+
+
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
     {
+
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });

@@ -101,7 +101,7 @@
    <section class="cta-section position-relative">
        <div class="container">
            <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
-               <h3>5% REFERRAL COMMISION</h3>
+               <a href="{{ route('user.referrals') }}" class="btn-lg btn-success">5% REFERRAL COMMISION</a>
 
            </div>
        </div>
@@ -183,11 +183,9 @@
                 <div class="form-group">
                 <select class="form-control" id="investmentSelect">
                     <option value="">-- Select --</option>
-                    <option value="investment1">PINK DIAMOND</option>
-                    <option value="investment2">JADEITE</option>
-                    <option value="investment3">BIXBITE</option>
-                    <option value="investment4">MUSGRAVITE</option>
-                    <option value="investment5">ALEXANDRITE</option>
+                    @foreach($plans as $plan)
+                        <option value="{{ $plan->id }}">{{ Str::title($plan->name) }}</option>
+                    @endforeach
                 </select>
                 </div>
                 <strong><div id="result" class="center"></div></strong>
@@ -207,32 +205,24 @@
           var resultElement = document.getElementById('result');
 
           switch (selectedInvestment) {
-            case 'investment1':
-              calculateInvestmentReturn(10, 20);
-              break;
-            case 'investment2':
-              calculateInvestmentReturn(20, 20);
-              break;
-            case 'investment3':
-              calculateInvestmentReturn(50, 25);
-              break;
-            case 'investment4':
-              calculateInvestmentReturn(100, 30);
-              break;
-            case 'investment5':
-              calculateInvestmentReturn(200, 30);
-              break;
+
+            @foreach ($plans as $plan)
+                case '{{ $plan->id }}':
+                calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
+                break;
+            @endforeach
+
             default:
               resultElement.innerHTML = 'Select a Plan!';
               break;
           }
         }
 
-        function calculateInvestmentReturn(investmentAmount, profitPercentage) {
+        function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
           var returnAmount = investmentAmount * (profitPercentage / 100);
           var totalAmount = investmentAmount + returnAmount;
           var resultElement = document.getElementById('result');
-          resultElement.innerHTML = 'Return after 7 days will be ' + totalAmount.toFixed(2) + ' USDT';
+          resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
         }
       </script>
    </section>
@@ -257,18 +247,19 @@
 
                        </div>
                        <div class="ml-5 ml-lg-0 pt-1 pt-lg-0">
-                           <h3 class="" >5</h3>
-                           <p class="c-black text-capitalize"> Days Online</p>
+                           <h3 class="" >{{ $active_investments }}</h3>
+                           <p class="c-black text-capitalize"> Active Investments</p>
                        </div>
                    </div>
                </div>
+
                <div class="col-lg-3 col-md-6 mb-30">
                    <div class="counter-box d-flex d-lg-block">
                        <div class="icon-box mb-3">
 
                        </div>
                        <div class="ml-5 ml-lg-0 pt-1 pt-lg-0">
-                           <h3 class="" >509</h3>
+                           <h3 class="" >{{ $total_users }}</h3>
                            <p class="c-black text-capitalize"> Total Accounts</p>
                        </div>
                    </div>
@@ -279,7 +270,7 @@
 
                        </div>
                        <div class="ml-5 ml-lg-0 pt-1 pt-lg-0">
-                           <h3 class="" >$ 10452.15</h3>
+                           <h3 class="" >{{ $total_deposited }} USDT</h3>
                            <p class="c-black text-capitalize"> Total Deposited</p>
                        </div>
                    </div>
@@ -290,7 +281,7 @@
 
                        </div>
                        <div class="ml-5 ml-lg-0 pt-1 pt-lg-0">
-                           <h3 class="" >$ 1914.40</h3>
+                           <h3 class="" >{{ $total_withdrawn }} USDT</h3>
                            <p class="c-black text-capitalize">Total Withdrawn</p>
                        </div>
                    </div>
@@ -324,7 +315,7 @@
 
                         @foreach ($user_investments as $user_investment)
                         <tr>
-                            <td>{{$user_investment->user->name}}</td>
+                            <td>{{Str::title($user_investment->user->name)}}</td>
                             <td>{{$user_investment->amount}} USDT</td>
                           </tr>
                         @endforeach
@@ -336,10 +327,10 @@
                <br>
 
                 <br>
-
+                    <hr>
                  <br>
 
-               <h3>Paid Outs</h3>
+               <h3>Latest Payouts</h3>
 
                  <div class="column is-10">
 
@@ -357,33 +348,13 @@
                      <tbody>
 
 
-                       <tr>
-                         <td>richgarancom</td>
-                         <td>200 USDT</td>
+                       @foreach ($payouts as $payout)
+                        <tr>
+                            <td>{{ Str::title($payout->user->name) }}</td>
+                            <td>{{ $payout->amount }} USDT</td>
 
-                       </tr>
-
-                       <tr>
-                         <td>Nopz999</td>
-                         <td>$1.50</td>
-                       </tr>
-
-                       <tr>
-                         <td>Vjmero</td>
-                         <td>$20.00</td>
-                       </tr>
-
-                       <tr>
-                         <td>nongsky</td>
-                         <td>$0.50</td>
-                       </tr>
-
-                       <tr>
-                         <td>david777</td>
-                         <td>$0.50</td>
-                       </tr>
-
-
+                        </tr>
+                       @endforeach
 
                      </tbody>
                    </table>

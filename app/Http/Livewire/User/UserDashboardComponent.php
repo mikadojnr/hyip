@@ -15,70 +15,86 @@ use Illuminate\Support\Str;
 
 class UserDashboardComponent extends Component
 {
-    public $remainingDays = 0;
+    public $countdown;
+    public $valueToday;
+    public $userInvestment;
+    public $yieldSum;
+    public $yieldPerDay;
+    public $increasePerDay;
 
-    public function updateReferralAmount()
+
+
+    public function mount()
     {
-        $user = Auth::user()->id;
-
-        // Find the referrals for the currently logged in user
-        $referrers = Referral::where('referrer_id', $user)->get();
-
-        foreach ($referrers as $referrer) {
-            // Check if there is a transaction record for the referee
-            $transaction = Transaction::where('user_id', $referrer->referee_id)
-                ->where('type', 'deposit')
-                ->where('status', 'approved')
-                ->first();
-
-            if ($transaction && $transaction->amount < 1) {
-                $referralAmount = $transaction->amount * 0.05;
-
-                // Update the referral amount in the referrals table
-                $referral->referral_amount = $referralAmount;
-                $referral->save();
-            }
-        }
-    }
-
-
-
-    public function render()
-    {
-        $this->updateReferralAmount();
-
-        $user = auth()->user();
-
-        $userInvestment = $user->investment()
+        $userInvestment = UserInvestment::where('user_id', auth()->id())
             ->where('is_active', true)
             ->where('is_completed', false)
+            ->latest('created_at')
             ->first();
 
-        if ($userInvestment) {
-            // Calculate the expected completion date
-            $expectedCompletionDate = $userInvestment->updated_at
-                ->addDays($userInvestment->duration)
-                ->format('Y-m-d');
+        $this->userInvestment = $userInvestment;
 
-            // Check if the expected completion date has been reached
-            if ($expectedCompletionDate === now()->format('Y-m-d')) {
+        if ($userInvestment) {
+            $createdDate = Carbon::parse($userInvestment->created_at);
+            $expiryDate = $createdDate->addDays($userInvestment->investmentPlan->duration);
+            $currentDate = Carbon::now();
+            $countdown = $currentDate->diffInDays($expiryDate);
+
+            $yieldPercentage = $userInvestment->investmentPlan->percentage/100;
+            $totalYield = $userInvestment->amount * $yieldPercentage;
+            $yieldPerDay = $totalYield / $userInvestment->duration;
+            $increasePerDay = $userInvestment->amount * $yieldPercentage / $userInvestment->investmentPlan->duration;
+
+            // Calculate the yield sum
+            $yieldSum = 0;
+            $loopDate = $currentDate->copy()->addDay(); // Start from the next day
+            while ($countdown > $userInvestment->investmentPlan->duration) {
+                $yieldSum += $yieldPerDay;
+                $loopDate->addDay();
+                $countdown = $loopDate->diffInDays($expiryDate);
+            }
+            $this->countdown = $countdown;
+            $this->increasePerDay = round($increasePerDay, 2);
+            $this->yieldSum = $yieldSum;
+            $this->yieldPerDay = $yieldPerDay;
+
+            // Calculate the expected completion date
+            if ($currentDate->greaterThanOrEqualTo($expiryDate)) {
                 // Mark the user investment as completed
                 $userInvestment->is_completed = true;
                 $userInvestment->is_active = false;
                 $userInvestment->save();
 
-                // Create a new withdrawal request
-                $withdrawalAmount = $userInvestment->amount * ($userInvestment->investmentPlan->percentage / 100)
-                    + $userInvestment->amount;
-
-                WithdrawalRequest::create([
+                Transaction::create([
                     'user_id' => $userInvestment->user_id,
                     'investment_id' => $userInvestment->id,
                     'amount' => $withdrawalAmount,
                     'status' => 'pending',
+                    'mode' => 'usdt',
+                    'type' => 'withdrawal'
                 ]);
             }
+
         }
+    }
+
+    public function withdrawalPermission($packageSelectedDate){
+        // get the last deposited transaction date from the user class and store in the $packageSelectedDate variable;
+        $packageSelectedDate;
+        // Calculate the difference between the two dates in days
+        $interval = $packageSelectedDate->diff(date('Y-m-d'));
+        $daysDifference = $interval->days;
+        if($daysDifference % 7 == 0){
+            return true;
+            // if it is true you can call the transaction method and use the credit type transaction
+        }else{
+            return false;
+        }
+    }
+
+
+    public function render()
+    {
 
         $totalReferralAmount = Referral::where('referrer_id', Auth::user()->id)
         ->sum('referral_amount');
@@ -93,30 +109,29 @@ class UserDashboardComponent extends Component
         ->orderBy('created_at', 'desc')->get();
 
         $totalAmountEarned = Transaction::where('user_id', Auth::user()->id)
-        ->where('status', 'approved')->sum('amount');
+        ->where('status', 'approved')
+        ->where('type', 'pending')
+        ->sum('amount');
 
 
         $totalWithdrawal = Transaction::where('user_id', Auth::user()->id)
         ->where('status', 'approved')->where('type', 'withdrawal')
         ->sum('amount');
 
-        $currentBalance = UserInvestment::where('is_completed', true)
-        ->where('is_active', false)
+        $currentBalance = Transaction::where('type', 'withdrawal')
+        ->where('status', 'pending')
         ->where('user_id', Auth::user()->id)
         ->sum('amount');
-
-        $activeInvestment = UserInvestment::where('user_id', Auth::user()->id)->latest()->first();
 
         return view('livewire.user.user-dashboard-component',[
             'referralCode'=>$referralCode,
             'pendingWithdrawals'=>$pendingWithdrawals,
             'totalAmountEarned'=>$totalAmountEarned,
             'totalWithdrawal'=>$totalWithdrawal,
-            'activeInvestment'=>$activeInvestment,
+
             'currentBalance'=>$currentBalance,
             'totalReferralAmount'=>$totalReferralAmount,
             'totalReferrals'=>$totalReferrals,
-            'userInvestment'=>$userInvestment,
         ])->layout('layouts.base');
     }
 }

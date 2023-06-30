@@ -29,16 +29,16 @@ class UserProfileComponent extends Component
 
         $user = User::where('id', Auth::user()->id)->first();
 
-        $this->get_name = $user->name;
+        $this->get_name = Str::title($user->name);
         $this->get_email = $user->email;
         $this->get_referral_code = $user->referral_code;
 
         $userdetail = UserDetail::where('user_id', Auth::user()->id)->first();
 
         if ($userdetail) {
-            $this->get_bank_name = $userdetail->bank_name;
+            $this->get_bank_name = Str::upper($userdetail->bank_name);
             $this->get_account_number = $userdetail->account_number;
-            $this->get_account_name = $userdetail->account_name;
+            $this->get_account_name = Str::upper($userdetail->account_name);
             $this->get_usdt_wallet = $userdetail->usdt_wallet;
         }
 
@@ -66,7 +66,7 @@ class UserProfileComponent extends Component
             session()->flash('message', 'Record was updated successfully.');
 
         }
-        return redirect()->route('user.detail',['user_id'=>Auth::user()->id]);
+        return redirect()->route('user.profile',['user_id'=>Auth::user()->id]);
     }
     public function render()
     {

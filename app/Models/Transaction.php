@@ -13,7 +13,7 @@ class Transaction extends Model
 
     public function investmentPlan()
     {
-        return $this->belongsTo(InvestmentPlan::class, 'investment_id');
+        return $this->belongsTo(InvestmentPlan::class, 'investment_plan_id');
     }
 
     public function user()
@@ -22,7 +22,16 @@ class Transaction extends Model
     }
 
     public function userInvestments()
-{
-    return $this->hasOne(UserInvestment::class);
-}
+    {
+        return $this->hasOne(UserInvestment::class, 'user_investment_id');
+    }
+
+    protected $fillable = [
+        'user_id',
+        'mode',
+        'status',
+        'type',
+        'amount',
+        'investment_id',
+    ];
 }

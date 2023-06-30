@@ -1,4 +1,4 @@
-<div class="bg-light" wire:init="updateReferralAmount">
+<div class="bg-light" >
 
     <!-- START Section Page Title -->
     <section class="breadcrumb-section">
@@ -109,9 +109,9 @@
                             <div class="container-fluid">
 
 
-                                <div class="row">
+                                <div class="row justify-content-center">
 
-                                    <div class="col-xl-6 col-md-6">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="card-box  p-4 m-2 alert-primary shadow">
 
                                             <strong class="header-title mt-0 mb-3">Account Balance</strong>
@@ -119,9 +119,9 @@
                                                 <div class="widget-detail-2 text-right">
                                                     <i class="fas fa-coins fa-4x pull-left text-primary" aria-hidden="true"  style="position: relative; padding-top:15px;"></i>
                                                     @if($currentBalance)
-                                                        <h4 class="">{{$currentBalance}} USDT</h4>
+                                                        <h5 class="">{{$currentBalance}} USDT</h5>
                                                     @else
-                                                        <h4 class="">0.00 USDT</h4>
+                                                        <h5 class="">0.00 USDT</h5>
                                                     @endif
 
                                                     <p class="text-muted mb-3">Pending&nbsp;Withdrawal</p>
@@ -131,7 +131,7 @@
                                         </div>
                                     </div><!-- end col -->
 
-                                    <div class="col-xl-6 col-md-6">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="card-box  p-4 m-2 alert-success shadow" >
 
                                             <strong class="header-title mt-0 mb-3">Total Amount Earned</strong>
@@ -139,9 +139,9 @@
                                                 <div class="widget-detail-2 text-right">
                                                     <i class=" fas fa-money-bill fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
                                                     @if($totalAmountEarned)
-                                                        <h4 class="">{{$totalAmountEarned}} USDT</h4>
+                                                        <h5 class="">{{$totalAmountEarned}} USDT</h5>
                                                     @else
-                                                        <h4 class="">0.00 USDT</h4>
+                                                        <h5 class="">0.00 USDT</h5>
                                                     @endif
                                                     <p class="text-muted mb-3">Earnings</p>
                                                 </div>
@@ -150,22 +150,7 @@
                                         </div>
                                     </div><!-- end col -->
 
-                                    <div class="col-xl-6 col-md-6">
-                                        <div class="card-box  p-4 m-2 alert-warning shadow">
-
-                                            <strong class="header-title mt-0 mb-3">Active Investment</strong>
-                                            <div class="widget-box-2">
-                                                <div class="widget-detail-2 text-right">
-                                                    <i class=" 	fas fa-chart-line fa-4x pull-left text-warning" style="position: relative; padding-top:15px;"></i>
-                                                    <h4 class="">$0.00 </h4>
-                                                    <p class="text-muted mb-3">Current Investment</p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-6 col-md-6">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="card-box  p-4 m-2 alert-danger shadow">
 
                                             <strong class="header-title mt-0 mb-3">Total Withdrawals</strong>
@@ -173,9 +158,9 @@
                                                 <div class="widget-detail-2 text-right">
                                                     <i class="fa fa-credit-card fa-4x pull-left text-danger" aria-hidden="true" style="position: relative; padding-top:15px;"></i>
                                                     @if($totalWithdrawal)
-                                                        <h4 class="">{{$totalWithdrawal}} USDT</h4>
+                                                        <h5 class="">{{$totalWithdrawal}} USDT</h5>
                                                     @else
-                                                        <h4 class="">0.00 USDT</h4>
+                                                        <h5 class="">0.00 USDT</h5>
 
                                                     @endif
                                                     <p class="text-muted mb-3">Withdrawals</p>
@@ -185,40 +170,86 @@
                                         </div>
                                     </div><!-- end col -->
 
+                                    @if($userInvestment)
                                     <div class="col-xl-12 col-md-12">
-                                        <div class="cta-box">
+                                        <div class="card-box  p-4 m-2 alert-warning shadow">
+
+                                            <strong class="header-title mt-0 mb-3">Active Investment: {{ Str::title($userInvestment->investmentPlan->name ) }}</strong>
+                                            <div class="widget-box-2">
+                                                <div class="widget-detail-2 text-right">
+                                                    <i class="fa fa-credit-card fa-4x pull-left" aria-hidden="true" style="position: relative; padding-top:15px;"></i>
+                                                    <h5 class="">Days Left: {{$countdown}}</h5>
+
+                                                    <h5 class="">Daily Increase: {{$increasePerDay}} USDT</h5>
+                                                    <h5 class="">Daily Yield: {{$yieldPerDay}} USDT</h5>
+                                                    <h5 class="">Yield Sum: {{$yieldSum}} USDT</h5>
+
+                                                    <p class="text-muted mb-3 pt-4"><strong>ACTIVE</strong></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!-- end col -->
+                                    @else
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="card-box  p-4 m-2 alert-warning shadow">
+
+                                            <strong class="header-title mt-0 mb-3">NO ACTIVE INVESTMENT</strong>
+                                            <div class="widget-box-2">
+                                                <div class="widget-detail-2 mt-3">
+                                                    {{-- <i class="fa fa-credit-card fa-4x pull-left text-danger" aria-hidden="true" style="position: relative; padding-top:15px;"></i> --}}
+                                                    <a href="{{ route('user.investment-plans') }}" class="btn-sm btn-success ">INVEST NOW</a>
+
+                                                    <p class="text-muted mb-3 text-right">INACTIVE</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!-- end col -->
+                                    @endif
+
+                                    <div class="col-xl-12 col-md-12">
+
                                             <div class="col-md-12">
                                                 <div class="card mt-4 bg-white">
                                                     <div class="card-header">
-                                                        <h4 class="card-title">Pending Withdrawals</h4>
+                                                        <h5 class="card-title">Pending Withdrawals</h5>
                                                     </div>
                                                     <div class="card-body">
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Name</th>
-                                                                    <th>Mode</th>
-                                                                    <th>Amount</th>
-                                                                    <th>Investment Plan</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                @foreach ($pendingWithdrawals as $pendingWithdrawal)
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>{{Str::title($pendingWithdrawal->user->name)}}</td>
-                                                                        <td>{{Str::upper($pendingWithdrawal->mode)}}</td>
-                                                                        <td>{{$pendingWithdrawal->amount}}</td>
-                                                                        <td>{{Str::title($pendingWithdrawal->investmentPlan->name)}}</td>
+                                                                        <th>Name</th>
+                                                                        <th>Mode</th>
+                                                                        <th>Amount</th>
+                                                                        <th>Investment Plan</th>
+                                                                        <th>View</th>
                                                                     </tr>
-                                                                @endforeach
+                                                                </thead>
+                                                                <tbody>
 
-                                                            </tbody>
-                                                        </table>
+                                                                    @foreach ($pendingWithdrawals as $pendingWithdrawal)
+                                                                        <tr>
+                                                                            <td>{{Str::title($pendingWithdrawal->user->name)}}</td>
+                                                                            <td>{{Str::upper($pendingWithdrawal->mode)}}</td>
+                                                                            <td>{{$pendingWithdrawal->amount}}</td>
+                                                                            <td>{{Str::title($pendingWithdrawal->investmentPlan->name)}}</td>
+                                                                            <td>
+                                                                                <a href="{{route('user.withdrawal',['transaction_id'=>$pendingWithdrawal->id])}}" class="btn-sm btn-success">
+                                                                                    <i class="fa fa-eye"></i>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+
                                     </div><!-- end col -->
 
                                     <div class="col-xl-12 col-md-12">
@@ -248,16 +279,16 @@
                                                 <div class="row">
 
                                                     <div class="col-xl-6 col-md-6">
-                                                        <div class="card-box  p-4 m-2 bg-light" style="border-radius: 5px;">
+                                                        <div class="card-box  p-4 m-2 alert-primary" style="border-radius: 5px;">
 
                                                             <strong class="header-title mt-0 mb-3">Number of Referrals</strong>
                                                             <div class="widget-box-2">
                                                                 <div class="widget-detail-2 text-right">
-                                                                    <i class="fa fa-users fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
+                                                                    <i class="fa fa-users fa-4x pull-left text-primary"  style="position: relative; padding-top:15px;"></i>
                                                                     @if ($totalReferrals)
-                                                                    <h4 class="">{{$totalReferrals}} </h4>
+                                                                    <h5 class="">{{$totalReferrals}} </h5>
                                                                     @else
-                                                                    <h4 class="">0 </h4>
+                                                                    <h5 class="">0 </h5>
                                                                     @endif
 
                                                                     <p class="text-muted mb-3">Referrals</p>
@@ -268,16 +299,16 @@
                                                     </div><!-- end col -->
 
                                                     <div class="col-xl-6 col-md-6">
-                                                        <div class="card-box  p-4 m-2 bg-light" style="border-radius: 5px;">
+                                                        <div class="card-box  p-4 m-2 alert-success" style="border-radius: 5px;">
 
                                                             <strong class="header-title mt-0 mb-3">Total Referral Earnings</strong>
                                                             <div class="widget-box-2">
                                                                 <div class="widget-detail-2 text-right">
                                                                     <i class="fas fa-gift fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
                                                                     @if ($totalReferralAmount)
-                                                                        <h4 class="">{{$totalReferralAmount}} USDT</h4>
+                                                                        <h5 class="">{{$totalReferralAmount}} USDT</h5>
                                                                     @else
-                                                                        <h4 class="">0.00 USDT</h4>
+                                                                        <h5 class="">0.00 USDT</h5>
                                                                     @endif
                                                                     <p class="text-muted mb-3">Earning</p>
                                                                 </div>

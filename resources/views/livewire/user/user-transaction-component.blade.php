@@ -109,6 +109,7 @@
                                         <th>Amount</th>
                                         <th>Mode</th>
                                         <th>Status</th>
+                                        <th>View</th>
 
                                     </tr>
                                 </thead>
@@ -120,8 +121,11 @@
                                         <td>{{$transaction->amount}}</td>
                                         <td>{{Str::upper($transaction->mode)}}</td>
                                         <td>{{Str::title($transaction->status)}}</td>
-
-
+                                        <td>
+                                            <a href="{{route('user.withdrawal',['transaction_id'=>$transaction->id])}}" class="btn-sm btn-success">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

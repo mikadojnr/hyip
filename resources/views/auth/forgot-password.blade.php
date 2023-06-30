@@ -62,8 +62,15 @@
                                         }
                                     </script>
 
+
+
                                     <x-validation-errors class="mb-4" style="color: red"/>
 
+                                    @if (session('status'))
+                                    <div class="mb-4 font-medium text-sm text-green-600">
+                                        {{ session('status') }}
+                                    </div>
+                                    @endif
 
                                     <form method=POST name="mainform" onsubmit="return checkform()" class="form" action="{{ route('password.email') }}">
                                         @csrf
