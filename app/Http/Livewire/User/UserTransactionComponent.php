@@ -26,6 +26,7 @@ class UserTransactionComponent extends Component
 
         $totalWithdrawal = Transaction::where('user_id', Auth::user()->id)
         ->where('type', 'withdrawal')
+        ->where('status', 'approved')
         ->sum('amount');
 
 

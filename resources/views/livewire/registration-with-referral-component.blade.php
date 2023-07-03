@@ -186,7 +186,7 @@
 
                                                 @if($referral_code)
                                                     <div class="col-12">
-                                                        <label for="" class="col-md-4 control-label">Referral&nbsp;Code</label>
+                                                        <label for="" class="col-md-4 control-label">Referral&nbsp;Code (Optional)</label>
                                                         <div class="form-group position-relative">
                                                             <span class="zmdi zmdi-key"></span>
                                                             <input disabled id="referrer" type="text" name="referrer" wire:model="referral_code" class="form-control">

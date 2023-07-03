@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12 col-sm-12">
+        <div class="col-lg-12 col-sm-12 mb-30">
             <div class="container">
                 <div class="card mt-4">
                     <div class="card-header">
@@ -66,37 +66,40 @@
                                         <th>Account No.</th>
                                         <th>Bank</th>
                                         <th>USDT Wallet Address</th>
-                                        <th colspan="2">Action</th>
+                                        <th >Delete</th>
+                                        <th >Make Admin</th>
 
 
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($users as $user)
-                                    <tr>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->user_detail->account_name ?? ''}}</td>
-                                        <td>{{$user->user_detail->account_number ?? ''}}</td>
-                                        <td>{{$user->user_detail->bank_name ?? ''}}</td>
+                                    @if($users)
+                                        @foreach($users as $user)
+                                        <tr>
+                                            <td>{{$user->name}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->user_detail->account_name ?? ''}}</td>
+                                            <td>{{$user->user_detail->account_number ?? ''}}</td>
+                                            <td>{{$user->user_detail->bank_name ?? ''}}</td>
 
-                                        <td>{{$user->user_detail->usdt_wallet ?? ''}}</td>
+                                            <td>{{$user->user_detail->usdt_wallet ?? ''}}</td>
 
-                                        <td>
-                                            <a class="btn-md btn-danger" href="#" wire:click.prevent="deleteUser({{$user->id}})" onclick="confirm('Are you sure you want to delete this user?') || event.stopImmediatePropagation()">
-                                                Delete
-                                            </a>
-                                        </td>
+                                            <td>
+                                                <a class="btn-sm btn-danger" href="#" wire:click.prevent="deleteUser({{$user->id}})" onclick="confirm('Are you sure you want to permanently delete this user account ?') || event.stopImmediatePropagation()">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
 
-                                        <td>
-                                            <a class="btn-md btn-success" href="#" wire:click.prevent="makeAdmin({{$user->id}})" onclick="confirm('Are you sure you want to add this user as admin?') || event.stopImmediatePropagation()">
-                                                Make Admin
-                                            </a>
-                                        </td>
+                                            <td>
+                                                <a class="btn-sm btn-success" href="#" wire:click.prevent="makeAdmin({{$user->id}})" onclick="confirm('Are you sure you want to make this user as admin?') || event.stopImmediatePropagation()">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            </td>
 
-                                    </tr>
-                                    @endforeach
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

@@ -4,12 +4,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-uppercase mb-4 c-white">Investment Plan</h2>
+                    <h2 class="text-uppercase mb-4 c-white">Staking Plan</h2>
                     <ul class="breadcrumb mb-0 justify-content-center">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('admin.investment-plans')}}">Investment Plans</a></li>
-                        <li class="breadcrumb-item active">Add Investment Plans</li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.investment-plans')}}">Staking Plans</a></li>
+                        <li class="breadcrumb-item active">Add Staking Plans</li>
                     </ul>
                 </div>
             </div>

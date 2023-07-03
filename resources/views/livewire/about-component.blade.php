@@ -22,7 +22,7 @@
                 <div class="col-lg-6 col-12">
                     <h5 class="subtitle-left">ABOUT US</h5>
 
-                    <h3>We are a leading global investment solutions partner, dedicated to improving peoples financial security.</h3>
+                    <h3>We are a leading global staking solutions partner, dedicated to improving peoples financial security.</h3>
                     <p class="mb-30">
                     Edge Pool is the easiest way for you to stake your USDT
                     on the polygon Network and maximize the efficiency of your staked assets through liquid staking

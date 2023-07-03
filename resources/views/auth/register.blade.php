@@ -250,7 +250,7 @@
                                             </div>
 
                                             <div class="col-12">
-                                                <label for="" class="col-md-4 control-label">Referral&nbsp;Code</label>
+                                                <label for="" class="col-md-4 control-label">Referral&nbsp;Code&nbsp;(Optional)</label>
 
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-key"></span>

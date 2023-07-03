@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12 col-sm-12">
+        <div class="col-lg-12 col-sm-12 mb-30">
             <div class="container">
                 <div class="card mt-4">
                     <div class="card-header">
@@ -64,39 +64,34 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Account Name</th>
-                                        <th>Account No.</th>
-                                        <th>USDT Wallet Address</th>
-                                        <th></th>
+
+                                        <th>Delete</th>
                                         <th>Discard Admin</th>
 
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($admins as $admin)
-                                    <tr>
-                                        <td>{{$admin->name}}</td>
-                                        <td>{{$admin->email}}</td>
-                                        <td>{{$admin->user_detail->account_name ?? ''}}</td>
-                                        <td>{{$admin->user_detail->account_number ?? ''}}</td>
+                                    @if($admins)
+                                        @foreach($admins as $admin)
+                                        <tr>
+                                            <td>{{$admin->name}}</td>
+                                            <td>{{$admin->email}}</td>
+                                            <td>
+                                                <a class="btn-sm btn-danger" href="#" wire:click.prevent="deleteUser({{$admin->id}})" onclick="confirm('Are you sure you want to permanently delete this user?') || event.stopImmediatePropagation()">
+                                                    <i class="fa fa-times text-white"></i>
+                                                </a>
+                                            </td>
 
-                                        <td>{{$admin->user_detail->usdt_wallet ?? ''}}</td>
+                                            <td>
+                                                <a class="btn-sm btn-success" href="#" wire:click.prevent="makeUser({{$admin->id}})" onclick="confirm('Are you sure you want to dismiss this user from admin?') || event.stopImmediatePropagation()">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            </td>
 
-                                        <td>
-                                            <a class="btn-sm btn-danger" href="#" wire:click.prevent="deleteUser({{$admin->id}})" onclick="confirm('Are you sure you want to delete this user?') || event.stopImmediatePropagation()">
-                                                <i class="fa fa-times text-white"></i>
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <a class="btn-sm btn-success" href="#" wire:click.prevent="makeUser({{$admin->id}})" onclick="confirm('Are you sure you want to dismiss this user from admin?') || event.stopImmediatePropagation()">
-                                                Yes
-                                            </a>
-                                        </td>
-
-                                    </tr>
-                                    @endforeach
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

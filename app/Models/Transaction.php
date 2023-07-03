@@ -32,6 +32,9 @@ class Transaction extends Model
         'status',
         'type',
         'amount',
-        'investment_id',
+        'investment_plan_id',
+        'user_investment_id',
+        'description',
+        'proof',
     ];
 }

@@ -34,17 +34,17 @@
 <div class="row">
 
 
-    <div class="col-lg-12 col-sm-12">
+    <div class="col-lg-12 col-sm-12 mb-30">
         <div class="container">
             <div class="card mt-4">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="pull-left">Transaction Detail</h4>
+                            <h4 class="pull-left">Transaction Details</h4>
                         </div>
 
                         <div class="col-md-6">
-                            <a href="{{route('admin.dashboard')}}" class="btn btn-custom pull-right">&raquo; Back to Dashboard</a>
+                            <a href="{{route('admin.transactions')}}" class="btn btn-custom pull-right">&raquo; Back to All Transactions</a>
                         </div>
 
                     </div>
@@ -71,9 +71,12 @@
                     <br>
 
                     <div class="row">
+
                         <div class="col-md-6 ">
-                            <strong>Investment Plan</strong>
-                            <p>{{Str::title($transaction->investmentPlan->name)}}</p>
+                            <strong>Staking Plan</strong>
+                            @if($transaction->investmentPlan->name)
+                                <p>{{Str::title($transaction->investmentPlan->name)}}</p>
+                            @endif
                         </div>
 
                         <div class="col-md-6">
@@ -111,6 +114,40 @@
                         </div>
                     </div>
 
+                    <div class="row">
+
+                        <div class="col-md-6 ">
+                            <strong>Payment Proof</strong>
+                            @if( $transaction->proof )
+                                <div>
+                                    <img src="{{ asset('storage/'.$transaction->proof)}}" alt="Pay proof" class="img-thumbnail" data-toggle="modal" data-target="#imageModal" width="100"/>
+                                </div>
+
+                            @endif
+
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <strong>Description</strong>
+                            @if( $transaction->description )
+                                <p>{{Str::title($transaction->description)}}</p>
+                            @endif
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <img src="{{ asset('storage/'.$transaction->proof)}}" class="img-fluid" alt="Image">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+
 
                     <br>
 
@@ -128,23 +165,25 @@
                                 </div>
                             </div>
                         @else
-                        <div class="row">
-                            <div class="col-md-4 ">
-                                <strong>Bank Name</strong>
-                                <p>{{$transaction->user->user_detail->bank_name}}</p>
-                            </div>
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <strong>Bank Name</strong>
+                                    <p>{{Str::upper($transaction->user->user_detail->bank_name)}}</p>
+                                </div>
 
-                            <div class="col-md-4 ">
-                                <strong>Account No.</strong>
-                                <p>{{$transaction->user->user_detail->account_number}}</p>
-                            </div>
+                                <div class="col-md-4 ">
+                                    <strong>Account No.</strong>
+                                    <p>{{$transaction->user->user_detail->account_number}}</p>
+                                </div>
 
-                            <div class="col-md-4 ">
-                                <strong>Account Name</strong>
-                                <p>{{$transaction->user->user_detail->account_name}}</p>
+                                <div class="col-md-4 ">
+                                    <strong>Account Name</strong>
+                                    <p>{{Str::title($transaction->user->user_detail->account_name)}}</p>
+                                </div>
                             </div>
-                        </div>
                         @endif
+
+
                     @endif
 
                 </div>
@@ -152,15 +191,20 @@
                 <div class="card-footer">
 
                     <div class="pull-right">
-                        @if($transaction->status === 'pending')
-                            <a href="" wire:click.prevent="approveTransaction({{$transaction->id}})" class="btn btn-success">Approve</a>
-                        @elseif($transaction->status === 'approved')
-                        <a href="" wire:click.prevent="makeTransactionPending({{$transaction->id}})" class="btn btn-warning">Make Pending</a>
+                        @if($transaction->status === 'requested' && $transaction->description === 'yield')
+                            <a href="" wire:click.prevent="approveWithdrawal({{$transaction->id}})" class="btn btn-success">Confirm Withdrawal</a>
 
+
+                        @elseif($transaction->status === 'requested' && $transaction->description === 'bonus')
+                            <a href="" wire:click.prevent="approveBonusWithdrawal({{$transaction->id}})" class="btn btn-success">Confirm Bonus Withdrawal</a>
+
+                        @elseif($transaction->status === 'pending' && $transaction->type === 'deposit')
+                            <a href="" wire:click.prevent="approvePayment({{$transaction->id}})" class="btn btn-success">Approve Payment</a>
                         @endif
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>

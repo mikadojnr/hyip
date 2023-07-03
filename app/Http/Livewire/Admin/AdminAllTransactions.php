@@ -27,7 +27,7 @@ class AdminAllTransactions extends Component
             ->get();
         }
         else {
-            $transactions = Transaction::orderBy('transactions.updated_at', 'desc')->paginate(20);
+            $transactions = Transaction::orderBy('updated_at', 'desc')->paginate(20);
         }
 
 

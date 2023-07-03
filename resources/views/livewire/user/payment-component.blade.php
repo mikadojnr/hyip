@@ -28,6 +28,10 @@
                                 <h4 class="pull-left">Make Payment</h4>
                             </div>
 
+                            <div class="col-md-6">
+                                <a href="{{route('user.investment-plans')}}" class="btn btn-custom pull-right">&raquo; Back to Staking Plans</a>
+                            </div>
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -43,13 +47,23 @@
                         @if($activeUserInvestment)
                         <div class="d-flex align-items-center justify-content-center">
                             <div class="text-center">
-                                <h4>You have an active investment in progress.</h4>
+                                <h4>You have an active staking in progress.</h4>
                                 <p> <strong>Payment cannot be made at this time!</strong></p>
-                                <a href="{{ route('user.dashboard') }}" class="btn btn-custom">Go to Dashboard</a>
+                                <a href="{{ route('user.dashboard') }}" class="btn btn-custom">&raquo; Go to Dashboard</a>
                             </div>
+                        </div>
+
+                        @elseif ($userTransaction)
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="text-center">
+                                <h4>Your last payment is still pending.</h4>
+                                <p> <strong>Payment cannot be made at this time!</strong></p>
+                                <a href="{{ route('user.dashboard') }}" class="btn btn-custom">&raquo; Go to Dashboard</a>
                             </div>
+                        </div>
                         @else
-                        <form class="form-horizontal" wire:submit.prevent="makePayment">
+
+                        <form class="form-horizontal" wire:submit.prevent="makePayment" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="" class="col-md-4 control-label">Plan Name</label>
@@ -58,17 +72,7 @@
 
                                     <input  type="text" name="" id="" class="form-control input-md" wire:model="get_userId" disabled hidden>
                                     <input  type="text" name="" id="" class="form-control input-md" wire:model="get_planId"  disabled hidden>
-                                    @error('get_name')
-                                        <p class="text-danger">{{$message}}</p>
-                                    @enderror
 
-                                    @error('get_userId')
-                                        <p class="text-danger">{{$message}}</p>
-                                    @enderror
-
-                                    @error('get_planId')
-                                        <p class="text-danger">{{$message}}</p>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -135,12 +139,6 @@
                             </section>
                             <!-- END Section payment details-->
 
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <button type="submit" class="btn btn-custom">Confirm you have Paid</button>
-                                </div>
-                            </div>
-
                             @elseif ($get_mode === 'bank')
 
                             <!-- START Section payment details -->
@@ -154,22 +152,33 @@
                                         <h5>Account Number: <strong id="account">7790877006</strong> </h5>
 
                                         <input type="button" onclick="copyBank()" value="Copy" class="btn btn-success">
-
-
-
                                 </div>
                             </section>
                             <!-- END Section payment details-->
 
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <button type="submit" class="btn btn-custom">Confirm you have Paid</button>
-                                </div>
-                            </div>
-
                             @endif
 
+                            @if($get_mode)
 
+                                <div class="form-group">
+                                    <label for="" class="col-md-4 control-label">Upload Payment Proof</label>
+                                    <div class="col-md-4">
+                                        <input type="file" name="" id="" class="input-file" wire:model="get_image">
+                                        @error('get_image')
+                                            <p class="text-danger">You must upload proof payment</p>
+                                        @enderror
+                                        @if($get_image)
+                                            <img src="{{ $get_image->temporaryUrl() }}" alt="" width="150" class="mt-3"/>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-custom">Confirm you have Paid</button>
+                                    </div>
+                                </div>
+                            @endif
 
                         </form>
                         @endif

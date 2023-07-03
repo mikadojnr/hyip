@@ -31,9 +31,8 @@ use App\Http\Livewire\User\PaymentComponent;
 use App\Http\Livewire\User\UserReferralsComponent;
 use App\Http\Livewire\User\UserTransactionComponent;
 use App\Http\Livewire\User\UserProfileComponent;
-use App\Http\Livewire\User\UserWithdrawalComponent;
-
-
+// use App\Http\Livewire\User\UserWithdrawalComponent;
+use App\Http\Livewire\User\UserViewTransactionDetailsComponent;
 
 
 Route::get('/', HomeComponent::class)->name('home');
@@ -58,11 +57,14 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function () 
 Route::middleware(['auth:sanctum', 'verified', 'authuser'])->group(function () {
     Route::get('user/dashboard', UserDashboardComponent::class)->name('user.dashboard');
     Route::get('user/investment-plans', UserInvestmentPlanComponent::class)->name('user.investment-plans');
-    Route::get('user/payment/{plan_id}', PaymentComponent::class)->name('user.payment');
+    Route::get('user/plan/{plan_id}', PaymentComponent::class)->name('user.payment');
     Route::get('user/referrals', UserReferralsComponent::class)->name('user.referrals');
     Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
     Route::get('user/transactions', UserTransactionComponent::class)->name('user.transactions');
-    Route::get('user/withdrawal/{transaction_id}', UserWithdrawalComponent::class)->name('user.withdrawal');
+
+    Route::get('user/transaction/{transaction_id}', UserViewTransactionDetailsComponent::class)->name('user.transaction-details');
+    // Route::get('user/withdraw', UserWithdrawalComponent::class)->name('user.withdraw');
+
 
 
 });

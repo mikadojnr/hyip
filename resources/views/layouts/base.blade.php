@@ -31,7 +31,7 @@
 
 
 
-    <title>Edgepool Investment</title>
+    <title>Edgepool</title>
 
 <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
@@ -81,6 +81,7 @@
                     </a>
                     <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#theme-navbar" aria-controls="theme-navbar" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-lines"></span>
+
                     </button>
                     <div class="collapse navbar-collapse" id="theme-navbar">
                         <ul class="navbar-nav ml-auto">
@@ -121,6 +122,7 @@
                                 @if(Auth::user()->utype === 'ADM')
                                     <li class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-user fa-1x"></i>
                                             My Account ({{Str::title(Auth::user()->name)}})
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -128,7 +130,7 @@
 
                                             <a href="{{route('admin.view-admins')}}" class="dropdown-item">Admins</a>
                                             <a href="{{route('admin.view-users')}}" class="dropdown-item">Users</a>
-                                            <a href="{{ route('admin.investment-plans')}}" class="dropdown-item">Investment Plans</a>
+                                            <a href="{{ route('admin.investment-plans')}}" class="dropdown-item">Staking Plans</a>
                                             <a href="{{ route('admin.transactions')}}" class="dropdown-item">All Transactions</a>
 
                                             <form action="{{ route('logout') }}" method="POST">
@@ -143,12 +145,13 @@
                                 @else
                                     <li class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-user fa-1x"></i>
                                             My Account ({{Str::title(Auth::user()->name)}})
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a href="{{ route('user.dashboard')}}" class="dropdown-item">Dashboard</a>
                                             <a href="{{ route('user.profile',['user_id'=>Auth::user()->id])}}" class="dropdown-item">My Profile</a>
-                                            <a href="{{ route('user.investment-plans')}}" class="dropdown-item">Investment Plans</a>
+                                            <a href="{{ route('user.investment-plans')}}" class="dropdown-item">Staking Plans</a>
                                             <a href="{{ route('user.referrals')}}" class="dropdown-item">Referrals</a>
                                             <a href="{{ route('user.transactions')}}" class="dropdown-item">Transactions</a>
 
@@ -184,7 +187,7 @@
                         <h3 class="logo-default" style="color:white"><b>EDGEPOOL</b></h3>
 
                         </div>
-                        <p class="mb-30 c-white">We are a leading global investment solutions partner, dedicated to improving peoples financial security.</p>
+                        <p class="mb-30 c-white">We are a leading global staking solutions partner, dedicated to improving peoples financial security.</p>
                         {{-- <div class="socials">
                             <a href="#" class="zmdi zmdi-facebook"></a>
                             <a href="#" class="zmdi zmdi-twitter"></a>
@@ -222,30 +225,39 @@
                         <h4 class="btm-sep pb-3 mb-30 c-white font-weight-semi-bolder">Contact us</h4>
                         <ul class="contact-info mt-4">
                             <li>
+                                <div><strong>Head Office</strong></div>
+                                <i class="zmdi zmdi-pin"></i>
+                                1020,Mate Jozsef ,Marianna Siklos Hungary
+                            </li>
+                            <li>
+                                <div><strong>Branch Office</strong></div>
                                 <i class="zmdi zmdi-pin"></i>
                                 234 Pine Street, Toronto, Canada.
                             </li>
                             <li>
                                 <i class="zmdi zmdi-whatsapp"></i>
-                                <a href="wa.me/+33701651402" style="text-decoration: none; color:white">+33701651402</a>
+                                <a href="https://wa.me/+33701651402" target="_blank" style="text-decoration: none; color:white">+337-0165-1402</a>
+
                             </li>
 
                             <li>
                                 <i class="zmdi zmdi-email"></i>
-                                edgepool01@gmail.com
+                                <a href="mailto:edgepool01@gmail.com" class="text-decoration-none text-white">info@edgepool.online</a>
                             </li>
                             <li>
                                 <i class="zmdi zmdi-phone"></i>
-                                +1 (251) 318 8879
+                                <a href="tel:+1 251 318 8879" class="text-white">+1 (251) 318 8879</a>
                                 <br>
-                                +1 (450) 804 4962
+                                <a href="tel:+1 450 804 4962" class="text-white">+1 (450) 804 4962</a>
+
+
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="copyright text-center c-white">
-                Edgepool Investment <span class="d-none d-md-inline-block">{{date('Y')}}</span>
+                Edgepool <span class="d-none d-md-inline-block">{{date('Y')}}</span>
             </div>
         </div>
     </footer>

@@ -114,7 +114,7 @@
                                     <div class="col-md-12 col-lg-4">
                                         <div class="card-box  p-4 m-2 alert-primary shadow">
 
-                                            <strong class="header-title mt-0 mb-3">Account Balance</strong>
+                                            <strong class="header-title mt-0 mb-3">Stake Returns</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
                                                     <i class="fas fa-coins fa-4x pull-left text-primary" aria-hidden="true"  style="position: relative; padding-top:15px;"></i>
@@ -124,7 +124,7 @@
                                                         <h5 class="">0.00 USDT</h5>
                                                     @endif
 
-                                                    <p class="text-muted mb-3">Pending&nbsp;Withdrawal</p>
+                                                    <p class="text-muted mb-3">Pending Withdrawals</p>
                                                 </div>
 
                                             </div>
@@ -138,12 +138,13 @@
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
                                                     <i class=" fas fa-money-bill fa-4x pull-left text-success" style="position: relative; padding-top:15px;"></i>
-                                                    @if($totalAmountEarned)
-                                                        <h5 class="">{{$totalAmountEarned}} USDT</h5>
+                                                    @if($totalWithdrawal && $totalReferralAmount)
+
+                                                        <h5 class="">{{ $totalWithdrawal + $totalReferralAmount }} USDT</h5>
                                                     @else
                                                         <h5 class="">0.00 USDT</h5>
                                                     @endif
-                                                    <p class="text-muted mb-3">Earnings</p>
+                                                    <p class="text-muted mb-3">Staking & Referrals</p>
                                                 </div>
 
                                             </div>
@@ -174,16 +175,14 @@
                                     <div class="col-xl-12 col-md-12">
                                         <div class="card-box  p-4 m-2 alert-warning shadow">
 
-                                            <strong class="header-title mt-0 mb-3">Active Investment: {{ Str::title($userInvestment->investmentPlan->name ) }}</strong>
+                                            <h6 class="header-title mt-0 mb-3 text-center text-md-left" style="color: #996633">Active Stake: <strong>{{ Str::upper($userInvestment->investmentPlan->name ) }}</strong></h6>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
                                                     <i class="fa fa-credit-card fa-4x pull-left" aria-hidden="true" style="position: relative; padding-top:15px;"></i>
-                                                    <h5 class="">Days Left: {{$countdown}}</h5>
 
-                                                    <h5 class="">Daily Increase: {{$increasePerDay}} USDT</h5>
-                                                    <h5 class="">Daily Yield: {{$yieldPerDay}} USDT</h5>
-                                                    <h5 class="">Yield Sum: {{$yieldSum}} USDT</h5>
-
+                                                    <p class="">Yield Amount: <strong>{{$yieldSum}} USDT</strong></p>
+                                                    <p class="">End Date: <strong>{{$expiryDate}}</strong></p>
+                                                    <p class="">Remaining Days: <strong>{{$daysPassed}}</strong></p>
                                                     <p class="text-muted mb-3 pt-4"><strong>ACTIVE</strong></p>
                                                 </div>
 
@@ -194,11 +193,11 @@
                                     <div class="col-xl-12 col-md-12">
                                         <div class="card-box  p-4 m-2 alert-warning shadow">
 
-                                            <strong class="header-title mt-0 mb-3">NO ACTIVE INVESTMENT</strong>
+                                            <strong class="header-title mt-0 mb-3">NO ACTIVE STAKING</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 mt-3">
                                                     {{-- <i class="fa fa-credit-card fa-4x pull-left text-danger" aria-hidden="true" style="position: relative; padding-top:15px;"></i> --}}
-                                                    <a href="{{ route('user.investment-plans') }}" class="btn-sm btn-success ">INVEST NOW</a>
+                                                    <a href="{{ route('user.investment-plans') }}" class="btn-sm btn-success ">STAKE NOW</a>
 
                                                     <p class="text-muted mb-3 text-right">INACTIVE</p>
                                                 </div>
@@ -213,7 +212,7 @@
                                             <div class="col-md-12">
                                                 <div class="card mt-4 bg-white">
                                                     <div class="card-header">
-                                                        <h5 class="card-title">Pending Withdrawals</h5>
+                                                        <h5 class="card-title">Pending Stake Returns</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="table-responsive">
@@ -223,7 +222,7 @@
                                                                         <th>Name</th>
                                                                         <th>Mode</th>
                                                                         <th>Amount</th>
-                                                                        <th>Investment Plan</th>
+                                                                        <th>Staking Plan</th>
                                                                         <th>View</th>
                                                                     </tr>
                                                                 </thead>
@@ -236,7 +235,7 @@
                                                                             <td>{{$pendingWithdrawal->amount}}</td>
                                                                             <td>{{Str::title($pendingWithdrawal->investmentPlan->name)}}</td>
                                                                             <td>
-                                                                                <a href="{{route('user.withdrawal',['transaction_id'=>$pendingWithdrawal->id])}}" class="btn-sm btn-success">
+                                                                                <a href="{{route('user.transaction-details',['transaction_id'=>$pendingWithdrawal->id])}}" class="btn-sm btn-success">
                                                                                     <i class="fa fa-eye"></i>
                                                                                 </a>
                                                                             </td>
@@ -319,9 +318,18 @@
 
                                                 </div>
 
-                                                <div class="widget-detail-2 py-2">
-                                                   <input class="form-control" type="text" name="referral_link" id="referral_link" value="edgepool.online/register/{{$referralCode}}" disabled><br>
-                                                   <input type="button" onclick="copyToClipboard();" value="Copy!" class="btn btn-success">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-detail-2 py-2">
+                                                            <input class="form-control" type="text" name="referral_link" id="referral_link" value="https://edgepool.online/register/{{$referralCode}}" disabled><br>
+                                                            <input type="button" onclick="copyToClipboard();" value="Copy!" class="btn btn-success">
+                                                         </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="py-2 widget-detail">
+                                                            <a href="{{ route('user.referrals') }}" class="pull-right btn btn-custom">View Referrals &raquo;</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>

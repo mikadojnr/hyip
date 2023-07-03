@@ -33,7 +33,7 @@
                             <div class="card-header" id="headingOne">
                               <h5 class="mb-0">
                                 <button class="btn text-decoration-none w-100 text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    How can I become an investor of the EdgePool Investment?
+                                    How can I become a staker of EdgePool?
                                 </button>
                               </h5>
                             </div>
@@ -44,7 +44,7 @@
                                 We recommend you to specify only true data.
                                 Create a login, a password and specify your email.
                                 You can log in your profile and use all services of the website:
-                                choose investment plan, make deposit.
+                                choose staking plan, make deposit.
                               </div>
                             </div>
                         </div>

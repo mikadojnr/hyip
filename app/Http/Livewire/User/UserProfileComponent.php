@@ -46,6 +46,13 @@ class UserProfileComponent extends Component
 
     public function updateDetails()
     {
+        $this->validate([
+            'get_bank_name' => 'required',
+            'get_account_number' => 'required',
+            'get_account_name' => 'required',
+            'get_usdt_wallet' => 'required',
+        ]);
+
         $findUserDetail = ['user_id' => Auth::user()->id];
 
         $data = [

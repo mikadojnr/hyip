@@ -6,8 +6,8 @@
                <div class="row align-items-center">
                    <div class="col-lg-6 col-12 text-lg-left text-center" data-wow-delay="0.2s">
                        <div class="banner-text">
-                           <h2 class="c-white mb-3 mb-md-4">EDGEPOOL RELIABLE INVESTMENT RETURNS </h2>
-                           <p class="c-white">EDGEPOOL helps generate strong investment returns and meets long-term goals,  We are a leading global investment solutions partner, dedicated to improving peoples financial security.</p>
+                           <h2 class="c-white mb-3 mb-md-4">EDGEPOOL RELIABLE STAKING RETURNS </h2>
+                           <p class="c-white">EDGEPOOL helps generate strong staking returns and meets long-term goals,  We are a leading global staking solutions partner, dedicated to improving peoples financial security.</p>
                            <a href="{{route('about')}}" class="btn btn-lg btn-custom btn-light mt-4">Read About Us</a>
                        </div>
                    </div>
@@ -56,7 +56,7 @@
                        <div class="proj-img">
                            <img src="{{ asset('img/project/portfolio-1.jpg') }}" alt="project">
                            <div class="proj-overlay">
-                               <h5>Sourcing key investment ideas designed to deliver real value</h5>
+                               <h5>Sourcing key staking ideas designed to deliver real value</h5>
                                <a href="{{ asset('img/project/portfolio-1.jpg') }}" class="pop-btn">
                                    <i class="zmdi zmdi-zoom-in"></i>
                                </a>
@@ -114,7 +114,7 @@
        <div class="container">
            <div class="row">
                <div class="col-12 text-center">
-                   <h2>investment plans</h2>
+                   <h2>Staking plans</h2>
 
 
    <!-- START Section Pricing -->
@@ -125,6 +125,7 @@
                <div role="tabpanel" class="tab-pane fade show active" id="yearly">
                    <div class="row justify-content-center">
 
+                        @if($plans)
                         @foreach ($plans as $plan )
                         <div class="col-md-6 col-lg-4 mb-30">
                             <div class="price-item text-center">
@@ -152,13 +153,14 @@
                                     @guest
                                          <a href="{{route('register')}}" class="btn btn-custom">Start Now</a>
                                     @else
-                                         <a class="btn btn-custom" href="{{route('user.payment',['plan_id'=>$plan->id])}}">Invest Now</a>
+                                         <a class="btn btn-custom" href="{{route('user.payment',['plan_id'=>$plan->id])}}">Stake  Now</a>
                                     @endguest
 
                                  </div>
                             </div>
                         </div>
                         @endforeach
+                        @endif
 
                    </div>
                </div>
@@ -174,10 +176,10 @@
    <section class="cta-section position-relative bg-light">
     <div class="container">
         <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
-            <h3>Investment Profit Calculator</h3>
+            <h3>Staking Profit Calculator</h3>
         <div class="card mt-4 bg-white">
             <div class="card-header">
-                <h5>Select an Investment Plan:</h5>
+                <h5>Select Staking Plan:</h5>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -248,7 +250,7 @@
                        </div>
                        <div class="ml-5 ml-lg-0 pt-1 pt-lg-0">
                            <h3 class="" >{{ $active_investments }}</h3>
-                           <p class="c-black text-capitalize"> Active Investments</p>
+                           <p class="c-black text-capitalize"> Active Stakes</p>
                        </div>
                    </div>
                </div>
@@ -297,7 +299,7 @@
    <section class="cta-section position-relative">
        <div class="container">
            <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
-               <h3>Latest Investments</h3>
+               <h3>Latest Stakings</h3>
                <div class="columns is-variable is-multiline is-centered">
                  <div class="column is-10">
 
@@ -313,12 +315,16 @@
                      </thead>
                      <tbody>
 
-                        @foreach ($user_investments as $user_investment)
-                        <tr>
-                            <td>{{Str::title($user_investment->user->name)}}</td>
-                            <td>{{$user_investment->amount}} USDT</td>
-                          </tr>
-                        @endforeach
+                        @if($user_investments)
+                            @foreach ($user_investments as $user_investment)
+                            <tr>
+                                <td>{{Str::title($user_investment->user->name)}}</td>
+                                <td>{{$user_investment->amount}} USDT</td>
+                            </tr>
+                            @endforeach
+                        @endif
+
+
 
                       </tbody>
                    </table>
@@ -348,13 +354,15 @@
                      <tbody>
 
 
-                       @foreach ($payouts as $payout)
-                        <tr>
-                            <td>{{ Str::title($payout->user->name) }}</td>
-                            <td>{{ $payout->amount }} USDT</td>
+                       @if($payouts)
+                            @foreach ($payouts as $payout)
+                            <tr>
+                                <td>{{ Str::title($payout->user->name) }}</td>
+                                <td>{{ $payout->amount }} USDT</td>
 
-                        </tr>
-                       @endforeach
+                            </tr>
+                            @endforeach
+                       @endif
 
                      </tbody>
                    </table>

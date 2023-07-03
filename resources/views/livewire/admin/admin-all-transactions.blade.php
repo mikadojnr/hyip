@@ -38,7 +38,7 @@
         </div>
 
 
-        <div class="col-lg-12 col-sm-12">
+        <div class="col-lg-12 col-sm-12 mb-30">
             <div class="container">
                 <div class="card mt-4">
                     <div class="card-header">
@@ -60,74 +60,75 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr class="">
+                                        <th>Date</th>
                                         <th>Name</th>
-                                        <th>Plan</th>
+                                        <th>Type</th>
                                         <th>Amount</th>
+                                        <th>Description</th>
                                         <th>Mode</th>
                                         <th>Status</th>
-                                        <th>Date</th>
                                         <th>View</th>
-
-
-
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($transactions as $transaction)
-                                    @if($transaction->type === 'deposit')
+                                    @if($transactions)
+                                        @foreach($transactions as $transaction)
+                                            @if($transaction->type === 'deposit')
+                                                <tr class="alert-success ">
+                                                    <td>{{date('Y-m-d H:i', strtotime($transaction->updated_at))}}</td>
+                                                    <td>{{Str::title($transaction->user->name)}}</td>
+                                                    <td>{{Str::title($transaction->type)}}</td>
+                                                    <td>{{$transaction->amount}}</td>
+                                                    <td>{{Str::title($transaction->description)}}</td>
+                                                    <td>{{Str::upper($transaction->mode)}}</td>
+                                                    <td>{{Str::title($transaction->status)}}</td>
 
-                                        <tr class="alert-success ">
+                                                    <td>
+                                                        <a class="btn-sm btn-success" href="{{route('admin.transaction-details',['transaction_id'=>$transaction->id])}}">
+                                                            <i class="fa fa-eye"></i>
 
-                                            <td>{{$transaction->user->name}}</td>
-                                            <td>{{Str::title($transaction->investmentPlan->name)}}</td>
-                                            <td>{{$transaction->amount}}</td>
-                                            <td>{{Str::upper($transaction->mode)}}</td>
-                                            <td>{{Str::title($transaction->status)}}</td>
-                                            <td>{{date('Y-m-d H:i', strtotime($transaction->updated_at))}}</td>
+                                                        </a>
+                                                    </td>
 
+                                                </tr>
 
-                                            <td>
-                                                <a class="btn-sm btn-success" href="{{route('admin.transaction-details',['transaction_id'=>$transaction->id])}}">
-                                                    <i class="fa fa-eye"></i>
+                                            @else
 
-                                                </a>
-                                            </td>
+                                                <tr class="alert-danger ">
+                                                    <td>{{date('Y-m-d H:i', strtotime($transaction->updated_at))}}</td>
+                                                    <td>{{Str::title($transaction->user->name)}}</td>
+                                                    <td>{{Str::title($transaction->type)}}</td>
+                                                    <td>{{$transaction->amount}}</td>
+                                                    <td>{{Str::title($transaction->description)}}</td>
+                                                    <td>{{Str::upper($transaction->mode)}}</td>
+                                                    <td>{{Str::title($transaction->status)}}</td>
 
-                                        </tr>
-                                    @else
+                                                    <td>
+                                                        <a class="btn-sm btn-success" href="{{route('admin.transaction-details',['transaction_id'=>$transaction->id])}}">
+                                                            <i class="fa fa-eye"></i>
 
-                                        <tr class="alert-danger">
-                                            <td>{{$transaction->user->name}}</td>
-                                            <td>{{Str::title($transaction->investmentPlan->name)}}</td>
-                                            <td>{{$transaction->amount}}</td>
-                                            <td>{{Str::upper($transaction->mode)}}</td>
-                                            <td>{{Str::title($transaction->status)}}</td>
-                                            <td>{{date('Y-m-d H:i', strtotime($transaction->updated_at))}}</td>
+                                                        </a>
+                                                    </td>
 
+                                                </tr>
+                                            @endif
 
-                                            <td>
-                                                <a class="btn-sm btn-success" href="{{route('admin.transaction-details',['transaction_id'=>$transaction->id])}}">
-                                                    <i class="fa fa-eye"></i>
-
-                                                </a>
-                                            </td>
-
-                                        </tr>
+                                        @endforeach
                                     @endif
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="card-footer">
+                    <div class="card-footer mb-10">
 
                         @if(!$searchTerm)
                             {{$transactions->links()}}
                         @endif
 
                     </div>
+
                 </div>
             </div>
         </div>

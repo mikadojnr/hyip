@@ -5,6 +5,8 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use App\Models\Referral;
 use App\Models\User;
+use App\Models\UserDetail;
+use App\Models\Transaction;
 use Livewire\WithPagination;
 
 
@@ -17,16 +19,86 @@ class UserReferralsComponent extends Component
     use WithPagination;
 
     public $searchTerm;
+    public $currentBonusBalance;
+    public $totalWithdrawnBonus;
+    public $totalPeopleReferred;
+    public $getTotalEarnedBonus;
+
+    public $amount;
+    public $mode;
+
+    public $showElement = false;
+
+    public function mount()
+    {
+        $this->currentBonusBalance = round($this->getCurrentBonusBalance(), 2);
+        $this->totalWithdrawnBonus = $this->getTotalWithdrawnBonus();
+        $this->totalPeopleReferred = $this->gettotalPeopleReferred();
+        $this->getTotalEarnedBonus = $this->getTotalEarnedBonus();
+    }
+
+    public function toggleElement()
+    {
+        $this->showElement = !$this->showElement;
+    }
+
+    public function requestBonusWithdrawal()
+    {
+        $bonusBalance = round($this->getCurrentBonusBalance(), 2);
+
+        if ($bonusBalance > 50)
+        {
+            $transaction = Transaction::create([
+                'user_id' => Auth::user()->id,
+                'mode' => 'usdt',
+                'status' => 'pending',
+                'type' => 'withdrawal',
+                'amount' => $bonusBalance,
+                'description' => 'bonus',
+            ]);
+        }
+        else{
+            session()->flash('error_message', 'Minimum withdrawal is 20 USDT');
+            return redirect()->route('user.referrals');
+        }
+    }
+
+    public function getTotalEarnedBonus()
+    {
+        return Transaction::where('description', 'bonus')
+            ->where('user_id', Auth::user()->id)
+            ->where('status', 'approved')
+            ->sum('amount');
+    }
+
+    public function gettotalPeopleReferred()
+    {
+        return Transaction::where('description', 'bonus')
+        ->where('user_id', Auth::user()->id)
+            ->where('status', 'approved')
+            ->count();
+    }
+
+    public function getTotalWithdrawnBonus()
+    {
+        return Transaction::where('description', 'bonus')
+        ->where('user_id', Auth::user()->id)
+            ->where('type', 'withdrawal')
+            ->where('status', 'approved')
+            ->sum('amount');
+    }
+
+    public function getCurrentBonusBalance()
+    {
+        $earnedBonus = $this->getTotalEarnedBonus();
+        $withdrawnBonus = $this->getTotalWithdrawnBonus();
+
+        return $earnedBonus - $withdrawnBonus;
+    }
 
 
     public function render()
     {
-
-        $totalReferralAmount = Referral::where('referrer_id', Auth::user()->id)
-        ->sum('referral_amount');
-
-        $totalReferrals = Referral::where('referrer_id', Auth::user()->id)
-        ->count();
 
         if ($this->searchTerm) {
 
@@ -47,8 +119,6 @@ class UserReferralsComponent extends Component
         return view('livewire.user.user-referrals-component',[
             'referrals'=>$referrals,
             'referralCode'=>$referralCode,
-            'totalReferralAmount'=>$totalReferralAmount,
-            'totalReferrals'=>$totalReferrals,
         ])->layout('layouts.base');
     }
 }

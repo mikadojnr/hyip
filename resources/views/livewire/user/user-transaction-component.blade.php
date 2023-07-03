@@ -122,7 +122,7 @@
                                         <td>{{Str::upper($transaction->mode)}}</td>
                                         <td>{{Str::title($transaction->status)}}</td>
                                         <td>
-                                            <a href="{{route('user.withdrawal',['transaction_id'=>$transaction->id])}}" class="btn-sm btn-success">
+                                            <a href="{{route('user.transaction-details',['transaction_id'=>$transaction->id])}}" class="btn-sm btn-success">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </td>

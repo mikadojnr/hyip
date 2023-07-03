@@ -21,45 +21,15 @@ class UserWithdrawalComponent extends Component
     public $get_duration;
     public $get_mode;
 
-    public function mount($transaction_id)
+    public function mount()
     {
 
-        $this->transaction_id = $transaction_id;
-
 
     }
 
-    public function requestWithdrawal() {
-
-            $transaction = Transaction::find();
-
-            $transaction->status = 'requested';
-            $transaction->type = 'withdrawal';
-
-            $transaction->save();
-            session()->flash('message', 'Your Request is being processed!');
-            return redirect()->route('user.withdrawal', ['transaction_id'=>$this->transaction_id]);
 
 
 
-    }
-
-    public function withdrawalPermission($transaction_id) {
-        $transaction = Transaction::find($transaction_id);
-
-        $transactionDate = $transaction->userInvestments->created_at;
-        $interval = Carbon::parse($transactionDate)->diff(Carbon::now());
-        $daysDifference = $interval->days;
-
-        if ($daysDifference % 7 == 0)
-        {
-            return true;
-        }
-        else {
-            return false;
-        }
-
-    }
 
     public function render()
     {

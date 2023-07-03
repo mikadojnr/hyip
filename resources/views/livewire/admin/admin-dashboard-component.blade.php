@@ -225,32 +225,34 @@
 
                                                     <th>Mode</th>
                                                     <th>Amount</th>
-                                                    <th>Investment Plan</th>
-                                                    <th>Approve</th>
-                                                    <th> View</th>
+                                                    <th>Staking Plan</th>
+                                                    <th>Proof</th>
+                                                    <th>View</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($pendingDepositRecords as $pendingDepositRecord)
-                                                    <tr>
-                                                        <td>{{Str::title($pendingDepositRecord->user->name)}}</td>
+                                                @if($pendingDepositRecords)
+                                                        @foreach ($pendingDepositRecords as $pendingDepositRecord)
+                                                            <tr>
+                                                                <td>{{Str::title($pendingDepositRecord->user->name)}}</td>
 
-                                                        <td>{{Str::upper($pendingDepositRecord->mode)}}</td>
-                                                        <td>{{$pendingDepositRecord->amount}}</td>
-                                                        <td>{{Str::title($pendingDepositRecord->investmentPlan->name)}}</td>
-                                                        {{-- <td>{{Str::title($pendingDepositRecord->status)}}</td> --}}
-                                                        <td>
-                                                            <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingDepositRecord->id}})">Approve</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingDepositRecord->id])}}" class="btn-sm btn-success">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                        </td>
+                                                                <td>{{Str::upper($pendingDepositRecord->mode)}}</td>
+                                                                <td>{{$pendingDepositRecord->amount}}</td>
+                                                                <td>{{Str::title($pendingDepositRecord->investmentPlan->name)}}</td>
+                                                                {{-- <td>{{Str::title($pendingDepositRecord->status)}}</td> --}}
+                                                                <td>
+                                                                    <img src="{{ asset('storage/'.$pendingDepositRecord->proof)}}" alt="Pay proof" style="object-fit:cover; height:50px; width:50px"/>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingDepositRecord->id])}}" class="btn-sm btn-success">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </td>
 
-                                                    </tr>
-                                                @endforeach
+                                                            </tr>
+                                                        @endforeach
+                                                @endif
 
                                             </tbody>
                                         </table>
@@ -266,7 +268,7 @@
                         <div class="col-md-12">
                             <div class="card mt-4 bg-white">
                                 <div class="card-header">
-                                    <h4 class="card-title">Pending Withdrawals</h4>
+                                    <h4 class="card-title">Requested Withdrawals</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -277,7 +279,9 @@
                                                     <th>Name</th>
                                                     <th>Mode</th>
                                                     <th>Amount</th>
-                                                    <th>Investment Plan</th>
+                                                    <th>Staking Plan</th>
+
+                                                    <th>View</th>
 
                                                 </tr>
                                             </thead>
@@ -290,9 +294,7 @@
                                                         <td>{{Str::upper($pendingWithdrawalRecord->mode)}}</td>
                                                         <td>{{$pendingWithdrawalRecord->amount}}</td>
                                                         <td>{{Str::title($pendingWithdrawalRecord->investmentPlan->name)}}</td>
-                                                        <td>
-                                                            <a href="{{route('admin.dashboard')}}" class="btn-sm btn-primary" wire:click.prevent="approveTransaction({{$pendingWithdrawalRecord->id}})">Approve</a>
-                                                        </td>
+
                                                         <td>
                                                             <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingWithdrawalRecord->id])}}" class="btn-sm btn-success">
                                                                 <i class="fa fa-eye"></i>

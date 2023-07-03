@@ -4,12 +4,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-uppercase mb-4 c-white">INVESTMENT PLANS</h2>
+                    <h2 class="text-uppercase mb-4 c-white">STAKING PLANS</h2>
                     <ul class="breadcrumb mb-0 justify-content-center">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{route('user.dashboard')}}">Dashboard</a></li>
 
-                        <li class="breadcrumb-item active">Investment Plans</li>
+                        <li class="breadcrumb-item active">Staking Plans</li>
                     </ul>
                 </div>
             </div>
@@ -125,10 +125,10 @@
         <section class="cta-section position-relative">
         <div class="container">
             <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
-                <h3>Investment Profit Calculator</h3>
+                <h3>Staking Profit Calculator</h3>
             <div class="card mt-4">
                 <div class="card-header">
-                    <h5>Select an Investment Plan:</h5>
+                    <h5>Select Staking Plan:</h5>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
