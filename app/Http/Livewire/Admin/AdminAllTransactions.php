@@ -31,8 +31,13 @@ class AdminAllTransactions extends Component
         }
 
 
+        $totalWithdrawalCharge = Transaction::where('type', 'withdrawal charge')->sum('amount');
+        $totalWithdrawalChargeCount = Transaction::where('type', 'withdrawal charge')->count();
+
         return view('livewire.admin.admin-all-transactions',[
             'transactions'=>$transactions,
+            'totalWithdrawalCharge'=> $totalWithdrawalCharge,
+            'totalWithdrawalChargeCount'=> $totalWithdrawalChargeCount,
         ])->layout('layouts.base');
     }
 }

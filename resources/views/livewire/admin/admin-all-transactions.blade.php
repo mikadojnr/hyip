@@ -25,6 +25,63 @@
         @endif
 
         <div class="container pt-5">
+
+            <div class="col-md-12">
+                <div class="card-box  p-4 m-2 bg-white border-top ">
+                    <div class="card-header">
+                        <strong class="header-title mt-0 mb-3">Stats</strong>
+                    </div>
+
+                    <div class="widget-box-2 card-body">
+                        <div class="row">
+
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card-box  p-4 m-2 alert-info" style="border-radius: 5px;">
+
+                                    <strong class="header-title mt-0 mb-3">Total Charges</strong>
+                                    <div class="widget-box-2">
+                                        <div class="widget-detail-2 text-right">
+                                            <i class="fas fa-money-bill fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
+                                            @if ($totalWithdrawalCharge)
+                                            <h4 class="">{{$totalWithdrawalCharge}} USDT</h4>
+                                            @else
+                                            <h4 class="">0.00 USDT</h4>
+                                            @endif
+
+                                            <p class="text-muted mb-3">Total Withdrawal Charges</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card-box  p-4 m-2 alert-info" style="border-radius: 5px;">
+
+                                    <strong class="header-title mt-0 mb-3">Number of Charges</strong>
+                                    <div class="widget-box-2">
+                                        <div class="widget-detail-2 text-right">
+                                            <i class="fa fa-credit-card fa-4x pull-left text-danger"  style="position: relative; padding-top:15px;"></i>
+                                            @if ($totalWithdrawalChargeCount)
+                                                <h4 class="">{{$totalWithdrawalChargeCount}}</h4>
+                                            @else
+                                                <h4 class="">0</h4>
+                                            @endif
+                                            <p class="text-muted mb-3">Charge Counts</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end col -->
+        </div>
+
+        <div class="container pt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
 

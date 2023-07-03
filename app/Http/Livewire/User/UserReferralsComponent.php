@@ -87,7 +87,6 @@ class UserReferralsComponent extends Component
             ->where('status', 'approved')
             ->sum('amount');
     }
-
     public function getCurrentBonusBalance()
     {
         $earnedBonus = $this->getTotalEarnedBonus();

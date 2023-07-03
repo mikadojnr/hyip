@@ -10,6 +10,8 @@ use App\Models\UserInvestment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use App\Http\Livewire\User\UserReferralsComponent;
+
 
 class AdminTransactionDetailComponent extends Component
 {
@@ -94,7 +96,7 @@ class AdminTransactionDetailComponent extends Component
         if ($record) {
             $record->status = 'approved';
             $record->type = 'withdrawal';
-            $record->description = 'stake';
+            $record->description = 'yield';
 
             $chargeAmount = $record->amount * 0.05;
 
@@ -107,9 +109,9 @@ class AdminTransactionDetailComponent extends Component
                 'user_id' => $record->user_id,
                 'mode' => $record->mode,
                 'status' => 'approved',
-                'type' => 'withdrawal',
+                'type' => 'charge',
                 'amount' => $chargeAmount,
-                'description' => 'charge',
+                'description' => 'withdrawal charge',
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
@@ -118,6 +120,7 @@ class AdminTransactionDetailComponent extends Component
 
     public function approveBonusWithdrawal()
     {
+
         $record = Transaction::findOrFail($transaction_id);
 
         if ($record) {
@@ -136,12 +139,13 @@ class AdminTransactionDetailComponent extends Component
                 'user_id' => $record->user_id,
                 'mode' => $record->mode,
                 'status' => 'approved',
-                'type' => 'withdraw',
+                'type' => 'charge',
                 'amount' => $chargeAmount,
-                'description' => 'charge',
+                'description' => 'withdrawal charge',
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
+            return $this->render;
         }
     }
 

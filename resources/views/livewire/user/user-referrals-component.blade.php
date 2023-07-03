@@ -158,7 +158,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="container">
-                                    <form action="">
+                                    <form action="" wire:click.prevent="requestBonusWithdrawal">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-6">
@@ -210,15 +210,16 @@
 
                                         @endif
 
+                                        @if($mode)
+                                            <div class="card-footer">
+                                                <input type="submit" value="Request Withdrawal" class="btn btn-success">
+                                            </div>
+                                        @endif
                                     </form>
                                 </div>
                             </div>
 
-                            @if($mode)
-                                <div class="card-footer">
-                                    <input type="submit" value="Request Withdrawal" class="btn btn-success">
-                                </div>
-                            @endif
+
                         </div>
                     </div>
                 </div>
