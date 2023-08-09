@@ -43,10 +43,11 @@ class UserViewTransactionDetailsComponent extends Component
         $userInvestment = UserInvestment::where('id', $transaction->user_investment_id)->first();
         $this->investment =$userInvestment;
         $this->transaction = $transaction;
+
         if ($userInvestment) {
 
             // calculate days left for the investment
-            // New
+
             $createdDate = Carbon::parse($userInvestment->created_at);
             $expiryDate = $createdDate->addDays($userInvestment->investmentPlan->duration);
             $currentDate = Carbon::now();
@@ -77,57 +78,6 @@ class UserViewTransactionDetailsComponent extends Component
 
         $userInvestment = UserInvestment::find($transaction->user_investment_id);
 
-        // if ($userInvestment) {
-        //     if (!$this->countdown % $userInvestment->duration === 0) {
-        //         session()->flash('warning_message', 'Your next withdrawal is in '.$this->countdown.' day(s)!');
-        //        return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //     }
-        //     else {
-
-        //         if (!$this->user_details) {
-
-        //             session()->flash('warning_message', 'You have to set Payment Details before withdrawal! You can set them from your profile page.');
-
-        //             return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //          }
-
-
-        //          elseif ($transaction) {
-        //              $transaction->mode = $this->get_mode;
-        //              $transaction->status = 'requested';
-        //              $transaction->save();
-        //          }
-        //          else {
-        //              session()->flash('error_message', 'No record found!');
-        //             return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-
-        //             }
-
-        //     session()->flash('message', 'Withdrawal request has been sent successfully!');
-        //     return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-
-        //     }
-        // }
-
-        // if ($userInvestment) {
-        //     if (!$this->countdown % $userInvestment->duration === 0) {
-        //         session()->flash('warning_message', 'Your next withdrawal is in '.$this->countdown.' day(s)!');
-        //         return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //     } elseif (!$this->user_details)
-        //     {
-        //         session()->flash('warning_message', 'You have to set Payment Details before withdrawal! You can set them from your profile page.');
-        //         return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //     } elseif ($transaction) {
-        //         $transaction->mode = $this->get_mode;
-        //         $transaction->status = 'requested';
-        //         $transaction->save();
-        //         session()->flash('message', 'Withdrawal request has been sent successfully!');
-        //         return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //     } else {
-        //         session()->flash('error_message', 'No record found!');
-        //         return redirect()->route('user.transaction-details',['transaction_id'=>$this->transaction_id]);
-        //     }
-        // }
         if ($userInvestment) {
             if ($this->countdown % $userInvestment->duration === 0) {
                 if ($this->user_details) {
@@ -151,19 +101,11 @@ class UserViewTransactionDetailsComponent extends Component
             }
 
         }
-
-
-
-
-
     }
 
 
     public function render()
     {
-
-
-
         return view('livewire.user.user-view-transaction-details-component',[
 
         ])->layout('layouts.base');

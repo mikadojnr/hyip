@@ -201,7 +201,7 @@
                                     <div class="card-footer mb-3">
                                         <div class="pull-right">
                                             @if ($transaction->status === 'pending' && $transaction->type === 'withdrawal')
-                                                <input type="submit" value="Request Withdrawal" class="btn btn-success">
+                                                <input type="submit" value="Request Withdrawal" class="btn btn-success" onclick="confirm('You will be charged 5% of your earnings!') || event.stopImmediatePropagation()">
                                             @endif
                                         </div>
                                     </div>

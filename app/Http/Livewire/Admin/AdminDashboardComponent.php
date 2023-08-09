@@ -11,15 +11,6 @@ use App\Http\Livewire\Admin\AdminTransactionDetailComponent;
 
 class AdminDashboardComponent extends Component
 {
-    // public function approveTransaction($id) {
-    //     $AdminTransactionDetailComponent = new AdminTransactionDetailComponent();
-    //     return $AdminTransactionDetailComponent->approveTransaction($id);
-    // }
-
-    // public function approveWithdraw($id) {
-    //     $AdminTransactionDetailComponent = new AdminTransactionDetailComponent();
-    //     return $AdminTransactionDetailComponent->approveWithdraw($id);
-    // }
 
     public function getTotalPendingWithdrawal()
     {
@@ -32,6 +23,7 @@ class AdminDashboardComponent extends Component
     {
         return Transaction::where('type', 'withdrawal')
             ->where('status', 'requested')
+            ->orderBy('updated_at', 'desc')
             ->get();
     }
 
@@ -48,9 +40,9 @@ class AdminDashboardComponent extends Component
         return Transaction::where('type', 'deposit')
             ->where('status', 'pending')
             ->where('description', 'payment')
+            ->orderBy('updated_at', 'desc')
             ->get();
     }
-
 
     public function getTotalWithdrawalForDay()
     {
@@ -68,6 +60,7 @@ class AdminDashboardComponent extends Component
             ->whereDate('created_at', Carbon::today())
             ->sum('amount');
     }
+
     public function getTotalDeposits()
     {
         return Transaction::where('type', 'deposit')

@@ -6,10 +6,6 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Http\Livewire\RegistrationWithReferralComponent;
 
 
-Route::get('/register/{referral_code?}', RegistrationWithReferralComponent::class)
-    ->middleware(['guest'])
-    ->name('register');
-
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\AboutComponent;
 use App\Http\Livewire\FaqsComponent;
@@ -39,6 +35,16 @@ Route::get('/', HomeComponent::class)->name('home');
 Route::get('/about', AboutComponent::class)->name('about');
 Route::get('/faqs', FaqsComponent::class)->name('faqs');
 Route::get('/contact-us', ContactComponent::class)->name('contact');
+Route::get('/register/{referral_code?}', RegistrationWithReferralComponent::class)
+    ->middleware(['guest'])
+    ->name('register');
+
+
+// AUTH ROUTES
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
+});
+
 
 
 // ADMIN ROUTES
@@ -59,7 +65,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authuser'])->group(function () {
     Route::get('user/investment-plans', UserInvestmentPlanComponent::class)->name('user.investment-plans');
     Route::get('user/plan/{plan_id}', PaymentComponent::class)->name('user.payment');
     Route::get('user/referrals', UserReferralsComponent::class)->name('user.referrals');
-    Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
+    // Route::get('user/profile/{user_id}', UserProfileComponent::class)->name('user.profile');
     Route::get('user/transactions', UserTransactionComponent::class)->name('user.transactions');
 
     Route::get('user/transaction/{transaction_id}', UserViewTransactionDetailsComponent::class)->name('user.transaction-details');

@@ -21,18 +21,19 @@
 
     <div class="row">
 
-        <div class="col-md-12">
-            @if (Session::has('message'))
-                <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
-            @endif
 
-
-            @if (Session::has('error_message'))
-                <div class="alert alert-success" role="alert"><strong>{{Session::get('error_message')}}</strong></div>
-            @endif
-        </div>
 
         <div class="container pt-5">
+            <div class="col-md-12">
+                @if (Session::has('message'))
+                    <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
+                @endif
+
+
+                @if (Session::has('error_message'))
+                    <div class="alert alert-success" role="alert"><strong>{{Session::get('error_message')}}</strong></div>
+                @endif
+            </div>
 
             <div class="col-md-12">
                 <div class="card-box  p-4 m-2 bg-white border-top ">
@@ -57,6 +58,7 @@
                             });
                       }
                     </script>
+
                     <div class="widget-box-2 card-body">
                         <div class="row">
 
@@ -68,10 +70,10 @@
                                         <div class="widget-detail-2 text-right">
                                             <i class="fa fa-users fa-4x pull-left text-primary"  style="position: relative; padding-top:15px;"></i>
                                             @if ($currentBonusBalance)
-                                            <h4 class="">{{$currentBonusBalance}} USDT</h4>
+                                            <h5 class="">{{$currentBonusBalance}} USDT</h5>
                                             @else
 
-                                            <h4 class="">0 USDT</h4>
+                                            <h5 class="">0 USDT</h5>
                                             @endif
 
                                             <p class="text-muted mb-3">Referrals</p>
@@ -90,10 +92,10 @@
                                             <i class="fa fa-users fa-4x pull-left"  style="position: relative; padding-top:15px; color:rgba(241, 181, 0, 0.924)"></i>
                                             @if ($totalPeopleReferred)
 
-                                            <h4 class="">{{$totalPeopleReferred}} </h4>
+                                            <h5 class="">{{$totalPeopleReferred}} </h5>
 
                                             @else
-                                            <h4 class="">0 </h4>
+                                            <h5 class="">0 </h5>
                                             @endif
 
                                             <p class="text-muted mb-3">People</p>
@@ -111,9 +113,9 @@
                                         <div class="widget-detail-2 text-right">
                                             <i class="fas fa-gift fa-4x pull-left text-success"  style="position: relative; padding-top:15px;"></i>
                                             @if ($getTotalEarnedBonus)
-                                                <h4 class="">{{$getTotalEarnedBonus}} USDT</h4>
+                                                <h5 class="">{{$getTotalEarnedBonus}} USDT</h5>
                                             @else
-                                                <h4 class="">0.00 USDT</h4>
+                                                <h5 class="">0.00 USDT</h5>
                                             @endif
                                             <p class="text-muted mb-3">Earning</p>
                                         </div>
@@ -131,11 +133,6 @@
                                     <input type="button" onclick="copyToClipboard();" value="Copy!" class="btn btn-success">
                                  </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="py-2 widget-detail">
-                                    <button wire:click="toggleElement" class="btn btn-custom pull-right">{{ $showElement ? 'Hide Form' : 'Withdraw Bonus' }}</button>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -144,14 +141,14 @@
                 </div>
             </div><!-- end col -->
 
-            @if ($showElement)
+
                 <div class="col-lg-12 col-sm-12 mb-30">
                     <div class="container">
                         <div class="card mt-4">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h4 class="pull-left">Bonus Withdrawal Form</h4>
+                                        <h5 class="pull-left">Bonus Withdrawal Form</h5>
                                     </div>
 
                                 </div>
@@ -164,7 +161,7 @@
                                             <div class="col-md-6">
                                                 <strong>Amount</strong>
                                                 <input type="number" name="" id="" class="form-control" wire:model="amount" required>
-                                                @error('get_amount')
+                                                @error('amount')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
@@ -175,7 +172,7 @@
                                                     <option value="usdt">USDT</option>
                                                     <option value="bank">BANK</option>
                                                 </select>
-                                                @error('get_mode')
+                                                @error('mode')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                                 <br>
@@ -183,38 +180,11 @@
                                             </div>
                                         </div>
 
-                                        @if($mode === 'usdt')
-                                            @if(Auth::user()->user_detail->usdt_wallet)
-                                                <strong>USDT WALLET ADDRESS</strong>
-                                                <span class="form-control">{{ Auth::user()->user_detail->usdt_wallet }}</span>
-                                            @endif
-                                        @elseif ($mode === 'bank')
-                                            @if (Auth::user()->user_detail->account_number && Auth::user()->user_detail->account_name && Auth::user()->user_detail->bank_name)
-                                                <div class="row">
-                                                    <div class="col md-4">
-                                                        <strong>Account Number</strong>
-                                                        <span class="form-control">{{ Auth::user()->user_detail->account_number }}</span>
-                                                    </div>
-                                                    <div class="col md-4">
-                                                        <strong>Account Name</strong>
-                                                        <span class="form-control">{{ Str::title(Auth::user()->user_detail->account_name)}}</span>
-                                                    </div>
 
-                                                    <div class="col md-4">
-                                                        <strong>Bank Name</strong>
-                                                        <span class="form-control">{{ Str::upper(Auth::user()->user_detail->bank_name)}}</span>
-                                                    </div>
+                                        <div class="card-footer">
+                                            <input type="submit" value="Request Withdrawal" class="btn btn-custom pull-right" onclick="confirm('You will be charged 5% of your earnings!') || event.stopImmediatePropagation()">
+                                        </div>
 
-                                                </div>
-                                            @endif
-
-                                        @endif
-
-                                        @if($mode)
-                                            <div class="card-footer">
-                                                <input type="submit" value="Request Withdrawal" class="btn btn-success">
-                                            </div>
-                                        @endif
                                     </form>
                                 </div>
                             </div>
@@ -223,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+
 
             <div class="row justify-content-center pt-5">
                 <div class="col-md-6">

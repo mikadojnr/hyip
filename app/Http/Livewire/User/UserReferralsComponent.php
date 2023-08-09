@@ -19,23 +19,11 @@ class UserReferralsComponent extends Component
     use WithPagination;
 
     public $searchTerm;
-    public $currentBonusBalance;
-    public $totalWithdrawnBonus;
-    public $totalPeopleReferred;
-    public $getTotalEarnedBonus;
 
     public $amount;
     public $mode;
 
     public $showElement = false;
-
-    public function mount()
-    {
-        $this->currentBonusBalance = round($this->getCurrentBonusBalance(), 2);
-        $this->totalWithdrawnBonus = $this->getTotalWithdrawnBonus();
-        $this->totalPeopleReferred = $this->gettotalPeopleReferred();
-        $this->getTotalEarnedBonus = $this->getTotalEarnedBonus();
-    }
 
     public function toggleElement()
     {
@@ -46,37 +34,61 @@ class UserReferralsComponent extends Component
     {
         $bonusBalance = round($this->getCurrentBonusBalance(), 2);
 
-        if ($bonusBalance > 50)
-        {
-            $transaction = Transaction::create([
-                'user_id' => Auth::user()->id,
-                'mode' => 'usdt',
-                'status' => 'pending',
-                'type' => 'withdrawal',
-                'amount' => $bonusBalance,
-                'description' => 'bonus',
-            ]);
-        }
-        else{
-            session()->flash('error_message', 'Minimum withdrawal is 20 USDT');
+        $this->validate([
+            'amount' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:50|max:'.$bonusBalance,
+            'mode' => 'required'
+
+        ]);
+
+
+
+        $bonusBalance = round($this->getCurrentBonusBalance(), 2);
+
+        $user_details = UserDetail::where('user_id', Auth::user()->id)->exists();
+
+        if ($user_details) {
+            if ($bonusBalance > 50)
+            {
+                if ($this->amount <= $bonusBalance) {
+
+                        $transaction = Transaction::create([
+                            'user_id' => Auth::user()->id,
+                            'mode' => $this->mode,
+                            'status' => 'requested',
+                            'type' => 'withdrawal',
+                            'amount' => $this->amount,
+                            'description' => 'bonus',
+                        ]);
+                        session()->flash('message', 'Withdrawal requested successfully!');
+                        return redirect()->route('user.referrals');
+
+                }
+
+            }
+            session()->flash('error_message', 'Minimum withdrawal is at 50 USDT');
             return redirect()->route('user.referrals');
         }
+        else {
+            session()->flash('error_message', 'No Payment Details Found! Add payment details on profile page');
+            return redirect()->route('user.referrals');
+        }
+
+
+    }
+
+    public function gettotalPeopleReferred()
+    {
+        return Referral::where('referrer_id', Auth::user()->id)
+            ->count();
     }
 
     public function getTotalEarnedBonus()
     {
         return Transaction::where('description', 'bonus')
             ->where('user_id', Auth::user()->id)
+            ->where('type', 'deposit')
             ->where('status', 'approved')
             ->sum('amount');
-    }
-
-    public function gettotalPeopleReferred()
-    {
-        return Transaction::where('description', 'bonus')
-        ->where('user_id', Auth::user()->id)
-            ->where('status', 'approved')
-            ->count();
     }
 
     public function getTotalWithdrawnBonus()
@@ -92,7 +104,7 @@ class UserReferralsComponent extends Component
         $earnedBonus = $this->getTotalEarnedBonus();
         $withdrawnBonus = $this->getTotalWithdrawnBonus();
 
-        return $earnedBonus - $withdrawnBonus;
+        return ($earnedBonus - $withdrawnBonus);
     }
 
 
@@ -118,6 +130,13 @@ class UserReferralsComponent extends Component
         return view('livewire.user.user-referrals-component',[
             'referrals'=>$referrals,
             'referralCode'=>$referralCode,
+
+
+            'currentBonusBalance' => $this->getCurrentBonusBalance(),
+            'totalWithdrawnBonus' => $this->getTotalWithdrawnBonus(),
+            'totalPeopleReferred' => $this->gettotalPeopleReferred(),
+            'getTotalEarnedBonus' => $this->getTotalEarnedBonus(),
+
         ])->layout('layouts.base');
     }
 }

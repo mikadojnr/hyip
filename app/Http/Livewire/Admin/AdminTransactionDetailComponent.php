@@ -23,71 +23,75 @@ class AdminTransactionDetailComponent extends Component
     }
 
     public function approvePayment($transaction_id)
-{
-    // Check the record for this transaction id
-    $record = Transaction::find($transaction_id);
-    $profit = (($record->investmentPlan->percentage/100) * $record->amount) + $record->amount;
+    {
+        // Check the record for this transaction id
+        $record = Transaction::find($transaction_id);
+        $profit = (($record->investmentPlan->percentage/100) * $record->amount) + $record->amount;
 
-    // If the record exists, update the status to 'approved'
-    if ($record) {
+        // If the record exists, update the status to 'approved'
+        if ($record) {
 
-        $record->status = 'approved';
-        $record->save();
+            $record->status = 'approved';
+            $record->save();
 
-        $investment = UserInvestment::where('transaction_id', $record->id)->first();
+            $investment = UserInvestment::where('transaction_id', $record->id)->first();
 
-        // Then check for the investment with transaction_id = $record->id and update is_active to true
-        if ($investment) {
-            $investment->is_active = true;
-            $investment->save();
-        } else {
-            // Create a new user investment record
-            // Check for the investment that started when the transaction was approved
+            // Then check for the investment with transaction_id = $record->id and update is_active to true
+            if ($investment) {
+                $investment->is_active = true;
+                $investment->save();
+            } else {
+                // Create a new user investment record
+                // Check for the investment that started when the transaction was approved
 
-            $userInvestment = UserInvestment::create([
-                'user_id' => $record->user_id,
-                'investment_plan_id' => $record->investment_plan_id,
-                'duration' => $record->investmentPlan->duration,
-                'amount' => $record->amount,
-                'is_active' => true,
-                'is_completed' => false,
-                'transaction_id' => $record->id,
-                'profit' => $profit,
-            ]);
-        }
+                $userInvestment = UserInvestment::create([
+                    'user_id' => $record->user_id,
+                    'investment_plan_id' => $record->investment_plan_id,
+                    'duration' => $record->investmentPlan->duration,
+                    'amount' => $record->amount,
+                    'is_active' => true,
+                    'is_completed' => false,
+                    'transaction_id' => $record->id,
+                    'profit' => $profit,
+                ]);
+            }
 
-        // Find the referees
-        $referees = Referral::where('referee_id', $record->user_id)->get();
+            // Find the referees
+            $referees = Referral::where('referee_id', $record->user_id)->get();
 
-        if ($referees) {
-            // Loop through all the records
-            foreach ($referees as $referee) {
-                // Check if there is a value on the record or not
-                if ($referee->referral_amount < 1) {
-                    $referralAmount = $record->amount * 0.05;
+            $firstDeposit = Transaction::where('type', 'deposit')
+            ->where('user_id', Auth::user()->id)
+            ->count();
 
-                    // Update the referral amount in the referrals table
-                    $referee->referral_amount = $referralAmount;
-                    $referee->save();
+            if ($referees) {
+                // Loop through all the records
+                foreach ($referees as $referee) {
+                    // Check if there is a value on the record or not
+                    if ($referee->referral_amount == 0 ) {
+                        $referralAmount = $record->amount * 0.05;
 
-                    // Create transaction record that credits user with referral bonus
-                    // Generate deposit to the user
-                    $referralDeposit = new Transaction;
-                    $referralDeposit->user_id = $referee->referrer_id;
-                    $referralDeposit->mode = 'usdt';
-                    $referralDeposit->status = 'approved';
-                    $referralDeposit->type = 'deposit';
-                    $referralDeposit->amount = $referralAmount;
-                    $referralDeposit->description = 'bonus';
-                    $referralDeposit->save();
+                        // Update the referral amount in the referrals table
+                        $referee->referral_amount = $referralAmount;
+                        $referee->save();
+
+                        // Create transaction record that credits user with referral bonus
+                        // Generate deposit to the user
+                        $referralDeposit = new Transaction;
+                        $referralDeposit->user_id = $referee->referrer_id;
+                        $referralDeposit->mode = 'usdt';
+                        $referralDeposit->status = 'approved';
+                        $referralDeposit->type = 'deposit';
+                        $referralDeposit->amount = $referralAmount;
+                        $referralDeposit->description = 'bonus';
+                        $referralDeposit->save();
+                    }
                 }
             }
-        }
 
-        session()->flash('message', 'Transaction status updated successfully!');
-        return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+            session()->flash('message', 'Transaction status updated successfully!');
+            return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+        }
     }
-}
 
     public function approveWithdrawal($transaction_id)
     {
@@ -111,14 +115,16 @@ class AdminTransactionDetailComponent extends Component
                 'status' => 'approved',
                 'type' => 'charge',
                 'amount' => $chargeAmount,
-                'description' => 'withdrawal charge',
+                'description' => 'yield',
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
+        return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+
         }
     }
 
-    public function approveBonusWithdrawal()
+    public function approveBonusWithdrawal($transaction_id)
     {
 
         $record = Transaction::findOrFail($transaction_id);
@@ -141,11 +147,12 @@ class AdminTransactionDetailComponent extends Component
                 'status' => 'approved',
                 'type' => 'charge',
                 'amount' => $chargeAmount,
-                'description' => 'withdrawal charge',
+                'description' => 'bonus',
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
-            return $this->render;
+            return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+
         }
     }
 

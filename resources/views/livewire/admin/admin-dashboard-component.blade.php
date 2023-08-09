@@ -242,7 +242,7 @@
                                                                 <td>{{Str::title($pendingDepositRecord->investmentPlan->name)}}</td>
                                                                 {{-- <td>{{Str::title($pendingDepositRecord->status)}}</td> --}}
                                                                 <td>
-                                                                    <img src="{{ asset('storage/'.$pendingDepositRecord->proof)}}" alt="Pay proof" style="object-fit:cover; height:50px; width:50px"/>
+                                                                    <img src="{{ asset('https://edgepool.online/assets/images/proofs')}}/{{ $pendingDepositRecord->proof }}" alt="Pay proof" style="object-fit:cover; height:50px; width:50px"/>
                                                                 </td>
                                                                 <td>
                                                                     <a href="{{route('admin.transaction-details',['transaction_id'=>$pendingDepositRecord->id])}}" class="btn-sm btn-success">

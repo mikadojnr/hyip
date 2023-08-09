@@ -18,6 +18,21 @@
     </section>
     <!-- END Section Page Title -->
 
+    <script>
+        function copyToClipboard(elementID) {
+            var element = document.getElementById(elementID);
+
+            // Execute the copy command using the Clipboard API
+            navigator.clipboard.writeText(element.innerText)
+                .then(function() {
+                    alert("Copied to clipboard!");
+                })
+                .catch(function(error) {
+                    alert("Failed to copy to clipboard: " + error);
+                });
+      }
+    </script>
+
     <div class="container" style="padding:30px 0;">
         <div class="row">
             <div class="col-md-12">
@@ -134,7 +149,10 @@
                                         <h5>Transfer <strong>{{$get_price}} USDT</strong> to the wallet address below:</h5>
 
                                         <h5><strong id="wallet">0x0f4078207d53181963203b5e9a18be8e811e0661</strong></h5>
-                                        <input type="button" onclick="copyWallet();" value="Copy" class="btn btn-success">
+
+                                        <input type="button" onclick="copyToClipboard('wallet');" value="Copy" class="btn btn-success">
+
+
                                 </div>
                             </section>
                             <!-- END Section payment details-->
@@ -151,7 +169,7 @@
                                         <h5>Account Name: <strong>Raven - IKAMBOR OTINYIA</strong> </h5>
                                         <h5>Account Number: <strong id="account">7790877006</strong> </h5>
 
-                                        <input type="button" onclick="copyBank()" value="Copy" class="btn btn-success">
+                                        <input type="button" onclick="copyToClipboard('account')" value="Copy" class="btn btn-success">
                                 </div>
                             </section>
                             <!-- END Section payment details-->

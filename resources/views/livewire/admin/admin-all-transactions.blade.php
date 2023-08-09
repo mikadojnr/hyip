@@ -58,7 +58,7 @@
                             <div class="col-xl-6 col-md-6">
                                 <div class="card-box  p-4 m-2 alert-info" style="border-radius: 5px;">
 
-                                    <strong class="header-title mt-0 mb-3">Number of Charges</strong>
+                                    <strong class="header-title mt-0 mb-3">Transaction Charges</strong>
                                     <div class="widget-box-2">
                                         <div class="widget-detail-2 text-right">
                                             <i class="fa fa-credit-card fa-4x pull-left text-danger"  style="position: relative; padding-top:15px;"></i>

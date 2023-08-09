@@ -69,21 +69,29 @@ class PaymentComponent extends Component
 
     public function makePayment() {
 
+        // The following happens when a user attempts paying for a plan
 
+        // Check if there is an active investment already runnning and prompts the user
         if ($this->activeUserInvestment) {
             session()->flash('error_message', 'Payment Error! An active investment was found on your dashboard');
             return redirect()->route('user.payment', ['plan_id'=>$this->get_planId]);
         }
+
+        // Check if the user has already made payment for a plan that is yet to be approved for investment to be active
         elseif ($this->userTransaction) {
             session()->flash('error_message', 'Payment Error! You still have pending payment!');
             return redirect()->route('user.payment', ['plan_id'=>$this->get_planId]);
         }
+
+        // If no active investment or pending deposit, process payment on DB
         else {
 
+            // validate the image upload field
             $this->validate([
                 'get_image' => 'required|image|max:2048', // Validate image file format and size
             ]);
 
+            // create a new record in the Transaction table
             $transaction = new Transaction;
             $transaction->user_id = Auth::user()->id;
             $transaction->mode = $this->get_mode;
@@ -93,8 +101,13 @@ class PaymentComponent extends Component
             $transaction->investment_plan_id = $this->get_planId;
             $transaction->description = 'payment';
 
-            $get_imageName = $this->get_image->store('proofs','public');
+            // Process image name to save on DB based on the timestamp
+            $get_imageName = Carbon::now()->timestamp.'.'.$this->get_image->extension();
 
+            // copy the image to the /proofs folder &change the name
+            $this->get_image->storeAs('proofs',$get_imageName);
+
+            // save the image name on DB
             $transaction->proof = $get_imageName;
 
             $transaction->save();

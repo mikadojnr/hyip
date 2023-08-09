@@ -75,7 +75,7 @@
                                     @if($admins)
                                         @foreach($admins as $admin)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
+                                            <td>{{Str::title($admin->name)}}</td>
                                             <td>{{$admin->email}}</td>
                                             <td>
                                                 <a class="btn-sm btn-danger" href="#" wire:click.prevent="deleteUser({{$admin->id}})" onclick="confirm('Are you sure you want to permanently delete this user?') || event.stopImmediatePropagation()">

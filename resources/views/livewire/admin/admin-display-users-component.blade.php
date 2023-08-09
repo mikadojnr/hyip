@@ -77,11 +77,11 @@
                                     @if($users)
                                         @foreach($users as $user)
                                         <tr>
-                                            <td>{{$user->name}}</td>
+                                            <td>{{Str::title($user->name)}}</td>
                                             <td>{{$user->email}}</td>
-                                            <td>{{$user->user_detail->account_name ?? ''}}</td>
+                                            <td>{{Str::title($user->user_detail->account_name ?? '')}}</td>
                                             <td>{{$user->user_detail->account_number ?? ''}}</td>
-                                            <td>{{$user->user_detail->bank_name ?? ''}}</td>
+                                            <td>{{Str::upper($user->user_detail->bank_name ?? '')}}</td>
 
                                             <td>{{$user->user_detail->usdt_wallet ?? ''}}</td>
 

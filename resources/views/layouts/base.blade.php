@@ -127,7 +127,7 @@
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a href="{{ route('admin.dashboard')}}" class="dropdown-item">Dashboard</a>
-
+                                            <a href="{{ route('user.profile',['user_id'=>Auth::user()->id])}}" class="dropdown-item">My Profile</a>
                                             <a href="{{route('admin.view-admins')}}" class="dropdown-item">Admins</a>
                                             <a href="{{route('admin.view-users')}}" class="dropdown-item">Users</a>
                                             <a href="{{ route('admin.investment-plans')}}" class="dropdown-item">Staking Plans</a>

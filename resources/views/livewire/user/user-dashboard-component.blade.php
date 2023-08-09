@@ -114,7 +114,7 @@
                                     <div class="col-md-12 col-lg-4">
                                         <div class="card-box  p-4 m-2 alert-primary shadow">
 
-                                            <strong class="header-title mt-0 mb-3">Stake Returns</strong>
+                                            <strong class="header-title mt-0 mb-3">Pending Stake Returns</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 text-right">
                                                     <i class="fas fa-coins fa-4x pull-left text-primary" aria-hidden="true"  style="position: relative; padding-top:15px;"></i>
@@ -193,13 +193,13 @@
                                     <div class="col-xl-12 col-md-12">
                                         <div class="card-box  p-4 m-2 alert-warning shadow">
 
-                                            <strong class="header-title mt-0 mb-3">NO ACTIVE STAKING</strong>
+                                            <strong class="header-title mt-0 mb-3">NO ACTIVE STAKE</strong>
                                             <div class="widget-box-2">
                                                 <div class="widget-detail-2 mt-3">
                                                     {{-- <i class="fa fa-credit-card fa-4x pull-left text-danger" aria-hidden="true" style="position: relative; padding-top:15px;"></i> --}}
                                                     <a href="{{ route('user.investment-plans') }}" class="btn-sm btn-success ">STAKE NOW</a>
 
-                                                    <p class="text-muted mb-3 text-right">INACTIVE</p>
+                                                    <p class="text-muted mb-3 text-right"><strong>IN-ACTIVE</strong></p>
                                                 </div>
 
                                             </div>

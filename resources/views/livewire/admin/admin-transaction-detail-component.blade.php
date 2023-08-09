@@ -30,9 +30,21 @@
 </section>
 <!-- END Section Page Title -->
 
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="{{ asset('https://edgepool.online/assets/images/proofs')}}/{{ $transaction->proof }}" class="img-fluid" alt="Payment Proof">
+        </div>
+      </div>
+    </div>
+</div>
 
 <div class="row">
 
+
+
+    {{-- <h1>{{ asset('https://edgepool.online/assets/images/proofs')}}/{{ $transaction->proof }}</h1> --}}
 
     <div class="col-lg-12 col-sm-12 mb-30">
         <div class="container">
@@ -49,6 +61,7 @@
 
                     </div>
                 </div>
+
                 <div class="card-body">
                     @if (Session::has('message'))
                         <div class="alert alert-success" role="alert"><strong>{{Session::get('message')}}</strong></div>
@@ -72,12 +85,21 @@
 
                     <div class="row">
 
-                        <div class="col-md-6 ">
-                            <strong>Staking Plan</strong>
-                            @if($transaction->investmentPlan->name)
-                                <p>{{Str::title($transaction->investmentPlan->name)}}</p>
-                            @endif
-                        </div>
+                        @if($transaction->description === "bonus")
+                            <div class="col-md-6 ">
+                                <strong>Staking Plan</strong>
+                                <p>----------</p>
+                            </div>
+                        @else
+                            <div class="col-md-6 ">
+                                <strong>Staking Plan</strong>
+                                @if($transaction->investmentPlan->name)
+                                    <p>{{Str::title($transaction->investmentPlan->name)}}</p>
+                                @endif
+                            </div>
+                        @endif
+
+
 
                         <div class="col-md-6">
                             <div class="">
@@ -120,7 +142,7 @@
                             <strong>Payment Proof</strong>
                             @if( $transaction->proof )
                                 <div>
-                                    <img src="{{ asset('storage/'.$transaction->proof)}}" alt="Pay proof" class="img-thumbnail" data-toggle="modal" data-target="#imageModal" width="100"/>
+                                    <img src="{{ asset('https://edgepool.online/assets/images/proofs')}}/{{ $transaction->proof }}" alt="Pay proof" class="img-thumbnail" data-toggle="modal" data-target="#imageModal" width="100"/>
                                 </div>
 
                             @endif
@@ -136,17 +158,6 @@
                         </div>
 
                     </div>
-
-                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                          <div class="modal-content">
-                            <div class="modal-body">
-                              <img src="{{ asset('storage/'.$transaction->proof)}}" class="img-fluid" alt="Image">
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-
 
 
                     <br>
@@ -164,7 +175,7 @@
                                     <p>{{$transaction->user->user_detail->usdt_wallet}}</p>
                                 </div>
                             </div>
-                        @else
+                        @elseif($transaction->mode == 'bank')
                             <div class="row">
                                 <div class="col-md-4 ">
                                     <strong>Bank Name</strong>
@@ -188,24 +199,28 @@
 
                 </div>
 
+
+
                 <div class="card-footer">
 
                     <div class="pull-right">
-                        @if($transaction->status === 'requested' && $transaction->description === 'yield')
-                            <a href="" wire:click.prevent="approveWithdrawal({{$transaction->id}})" class="btn btn-success">Confirm Withdrawal</a>
-
+                        @if($transaction->status === 'requested' || $transaction->status === 'pending' && $transaction->description === 'yield')
+                            <a href="" wire:click.prevent="approveWithdrawal({{$transaction->id}})" class="btn btn-success">Approve Withdrawal</a>
 
                         @elseif($transaction->status === 'requested' && $transaction->description === 'bonus')
-                            <a href="" wire:click.prevent="approveBonusWithdrawal({{$transaction->id}})" class="btn btn-success">Confirm Bonus Withdrawal</a>
+                            <a href="" wire:click.prevent="approveBonusWithdrawal({{$transaction->id}})" class="btn btn-success">Approve Bonus Withdrawal</a>
 
                         @elseif($transaction->status === 'pending' && $transaction->type === 'deposit')
-                            <a href="" wire:click.prevent="approvePayment({{$transaction->id}})" class="btn btn-success">Approve Payment</a>
+                            <a href="" wire:click.prevent="approvePayment({{$transaction->id}})" class="btn btn-success">Approve Deposit</a>
                         @endif
                     </div>
 
                 </div>
 
             </div>
+
+
+
         </div>
     </div>
 </div>

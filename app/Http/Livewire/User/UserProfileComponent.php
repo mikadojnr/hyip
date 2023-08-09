@@ -10,6 +10,8 @@ use App\Models\UserDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Hash;
+
 class UserProfileComponent extends Component
 {
     public $user_id;
@@ -22,6 +24,11 @@ class UserProfileComponent extends Component
     public $get_account_number;
     public $get_account_name;
     public $get_usdt_wallet;
+
+
+    public $oldPassword;
+    public $newPassword;
+    public $confirmPassword;
 
     public function mount($user_id)
     {
@@ -75,6 +82,38 @@ class UserProfileComponent extends Component
         }
         return redirect()->route('user.profile',['user_id'=>Auth::user()->id]);
     }
+
+    public function changePassword()
+    {
+        $this->validate([
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:8',
+            'confirmPassword' => 'required|same:newPassword',
+
+        ]);
+
+        $user = Auth::user();
+
+        // check if old password matches entered password
+        if(!Hash::check($this->oldPassword, $user->password))
+        {
+            session()->flash("error_message", "Old Password and current password does not match!");
+            return redirect()->route('user.profile',['user_id'=>Auth::user()->id]);
+        }
+        else{
+            $user->password = Hash::make($this->newPassword);
+            $user->save();
+
+            // clear the form fields
+            $this->oldPassword ='';
+            $this->newPassword ='';
+            $this->confirmPassword = '';
+
+            session()->flash("message", "Password was changed successfully!");
+            return redirect()->route('user.profile',['user_id'=>Auth::user()->id]);
+        }
+    }
+
     public function render()
     {
         return view('livewire.user.user-profile-component')->layout('layouts.base');
