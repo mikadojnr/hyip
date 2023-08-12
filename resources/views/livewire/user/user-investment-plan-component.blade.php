@@ -57,51 +57,6 @@
 
                                         </ul>
 
-                                        {{-- @push('scripts')
-                                            <script>
-                                                document.addEventListener("livewire:load", function() {
-
-                                                    var userId = document.getElementById('user_id');
-                                                    var setUserId = planId.dataset.value;
-
-                                                    var planId = document.getElementById('plan_id');
-                                                    var setPlanId = planId.dataset.value;
-
-                                                    var planName = document.getElementById('plan_name');
-                                                    var setPlanName = planName.dataset.value;
-
-                                                    var price = document.getElementById('price');
-                                                    var setPrice = price.dataset.value;
-
-                                                    var percentage = document.getElementById('percentage');
-                                                    var setPercentage = percentage.dataset.value;
-
-                                                    var duration = document.getElementById('duration');
-                                                    var setDuration = duration.dataset.value;
-
-                                                    var userId = {{Auth::user()->id}}
-
-                                                    Livewire.emit('updateData', function () {
-                                                        @this.set('setPlanId', setPlanId);
-                                                        @this.set('setPlanName', setPlanName);
-                                                        @this.set('setPrice', setPrice);
-                                                        @this.set('setPercentage', setPercentage);
-                                                        @this.set('setDuration', setDuration);
-                                                        @this.set('setUserId', setUserId);
-
-                                                    });
-                                                });
-                                            </script>
-                                        @endpush --}}
-
-                                        @push('scripts')
-                                            <script>
-                                                function redirect() {
-                                                    Livewire.emit('redirectToPayment');
-                                                }
-                                            </script>
-                                        @endpush
-
                                         {{-- <button  wire:click="$emit('updateData')">Invest</button> --}}
                                         <a class="btn btn-custom" href="{{route('user.payment',['plan_id'=>$plan->id])}}">Invest</a>
 
@@ -149,34 +104,37 @@
 
         </div>
 
-        <script>
-            function calculateReturn() {
-          var investmentSelect = document.getElementById('investmentSelect');
-          var selectedInvestment = investmentSelect.value;
-          var resultElement = document.getElementById('result');
 
-          switch (selectedInvestment) {
-
-            @foreach ($plans as $plan)
-                case '{{ $plan->id }}':
-                calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
-                break;
-            @endforeach
-
-            default:
-              resultElement.innerHTML = 'Select a Plan!';
-              break;
-          }
-        }
-
-        function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
-          var returnAmount = investmentAmount * (profitPercentage / 100);
-          var totalAmount = investmentAmount + returnAmount;
-          var resultElement = document.getElementById('result');
-          resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
-        }
-        </script>
         </section>
         <!-- END Section Calculator-->
     </div>
 </div>
+
+
+<script>
+    function calculateReturn() {
+  var investmentSelect = document.getElementById('investmentSelect');
+  var selectedInvestment = investmentSelect.value;
+  var resultElement = document.getElementById('result');
+
+  switch (selectedInvestment) {
+
+    @foreach ($plans as $plan)
+        case '{{ $plan->id }}':
+        calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
+        break;
+    @endforeach
+
+    default:
+      resultElement.innerHTML = 'Select a Plan!';
+      break;
+  }
+}
+
+function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
+  var returnAmount = investmentAmount * (profitPercentage / 100);
+  var totalAmount = investmentAmount + returnAmount;
+  var resultElement = document.getElementById('result');
+  resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
+}
+</script>

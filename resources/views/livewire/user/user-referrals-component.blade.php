@@ -41,23 +41,7 @@
                         <strong class="header-title mt-0 mb-3">Referral Link</strong>
                     </div>
 
-                    <script>
-                        function copyToClipboard() {
-                            var input = document.getElementById("referral_link");
 
-                            // Create a range object and select the input text
-                            input.select();
-
-                            // Execute the copy command using the Clipboard API
-                            navigator.clipboard.writeText(input.value)
-                            .then(function() {
-                                alert("Copied to clipboard!");
-                            })
-                            .catch(function(error) {
-                                alert("Failed to copy to clipboard: " + error);
-                            });
-                      }
-                    </script>
 
                     <div class="widget-box-2 card-body">
                         <div class="row">
@@ -142,57 +126,61 @@
             </div><!-- end col -->
 
 
-                <div class="col-lg-12 col-sm-12 mb-30">
-                    <div class="container">
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="pull-left">Bonus Withdrawal Form</h5>
+            <!-- Bonus Withdrawal Form -->
+            <div class="col-lg-12 col-sm-12 mb-30">
+                <div class="container">
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="pull-left">Bonus Withdrawal Form</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <form action="" wire:click.prevent="requestBonusWithdrawal">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <strong>Amount</strong>
+                                            <input type="number" name="" id="" class="form-control" wire:model="amount" required>
+                                            @error('amount')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Payment Mode</strong>
+                                            <select name="" id="" class="form-control md-4" wire:model="mode" required>
+                                                <option value="">-- Select Payment mode --</option>
+                                                <option value="usdt">USDT</option>
+                                                <option value="bank">BANK</option>
+                                            </select>
+                                            @error('mode')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                            <br>
+
+                                        </div>
                                     </div>
 
-                                </div>
+
+                                    <div class="card-footer">
+                                        <input type="submit"
+                                        value="Request Withdrawal"
+                                        class="btn btn-custom pull-right"
+                                        onclick="confirm('You will be charged 5% of your earnings!') || event.stopImmediatePropagation()">
+                                    </div>
+
+                                </form>
                             </div>
-                            <div class="card-body">
-                                <div class="container">
-                                    <form action="" wire:click.prevent="requestBonusWithdrawal">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Amount</strong>
-                                                <input type="number" name="" id="" class="form-control" wire:model="amount" required>
-                                                @error('amount')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-6">
-                                                <strong>Payment Mode</strong>
-                                                <select name="" id="" class="form-control md-4" wire:model="mode" required>
-                                                    <option value="">-- Select Payment mode --</option>
-                                                    <option value="usdt">USDT</option>
-                                                    <option value="bank">BANK</option>
-                                                </select>
-                                                @error('mode')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                                <br>
-
-                                            </div>
-                                        </div>
-
-
-                                        <div class="card-footer">
-                                            <input type="submit" value="Request Withdrawal" class="btn btn-custom pull-right" onclick="confirm('You will be charged 5% of your earnings!') || event.stopImmediatePropagation()">
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-
-
                         </div>
+
+
                     </div>
                 </div>
+            </div>
 
 
             <div class="row justify-content-center pt-5">
@@ -261,3 +249,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    function copyToClipboard() {
+        var input = document.getElementById("referral_link");
+
+        // Create a range object and select the input text
+        input.select();
+
+        // Execute the copy command using the Clipboard API
+        navigator.clipboard.writeText(input.value)
+        .then(function() {
+            alert("Copied to clipboard!");
+        })
+        .catch(function(error) {
+            alert("Failed to copy to clipboard: " + error);
+        });
+  }
+</script>

@@ -200,33 +200,7 @@
 
       </div>
 
-      <script>
-        function calculateReturn() {
-          var investmentSelect = document.getElementById('investmentSelect');
-          var selectedInvestment = investmentSelect.value;
-          var resultElement = document.getElementById('result');
 
-          switch (selectedInvestment) {
-
-            @foreach ($plans as $plan)
-                case '{{ $plan->id }}':
-                calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
-                break;
-            @endforeach
-
-            default:
-              resultElement.innerHTML = 'Select a Plan!';
-              break;
-          }
-        }
-
-        function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
-          var returnAmount = investmentAmount * (profitPercentage / 100);
-          var totalAmount = investmentAmount + returnAmount;
-          var resultElement = document.getElementById('result');
-          resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
-        }
-      </script>
    </section>
 <!-- END Section Calculator-->
 
@@ -415,3 +389,31 @@
 
 
 </div>
+
+<script>
+    function calculateReturn() {
+      var investmentSelect = document.getElementById('investmentSelect');
+      var selectedInvestment = investmentSelect.value;
+      var resultElement = document.getElementById('result');
+
+      switch (selectedInvestment) {
+
+        @foreach ($plans as $plan)
+            case '{{ $plan->id }}':
+            calculateInvestmentReturn({{ $plan->price }}, {{ $plan->percentage }}, {{ $plan->duration }});
+            break;
+        @endforeach
+
+        default:
+          resultElement.innerHTML = 'Select a Plan!';
+          break;
+      }
+    }
+
+    function calculateInvestmentReturn(investmentAmount, profitPercentage, duration) {
+      var returnAmount = investmentAmount * (profitPercentage / 100);
+      var totalAmount = investmentAmount + returnAmount;
+      var resultElement = document.getElementById('result');
+      resultElement.innerHTML = 'Return after '+duration+ ' days will be ' + totalAmount.toFixed(2) + ' USDT';
+    }
+  </script>

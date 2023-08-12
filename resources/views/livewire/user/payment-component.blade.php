@@ -18,21 +18,6 @@
     </section>
     <!-- END Section Page Title -->
 
-    <script>
-        function copyToClipboard(elementID) {
-            var element = document.getElementById(elementID);
-
-            // Execute the copy command using the Clipboard API
-            navigator.clipboard.writeText(element.innerText)
-                .then(function() {
-                    alert("Copied to clipboard!");
-                })
-                .catch(function(error) {
-                    alert("Failed to copy to clipboard: " + error);
-                });
-      }
-    </script>
-
     <div class="container" style="padding:30px 0;">
         <div class="row">
             <div class="col-md-12">
@@ -164,7 +149,7 @@
                                 <div class="container">
                                     <div class="cta-box bg-white wow fadeInUp" data-wow-delay="0.2s">
 
-                                        <h5>Transfer <strong>{{$get_price*760}}</strong> Naira to the account number below:</h5>
+                                        <h5>Transfer <strong>{{$get_price*870}}</strong> Naira to the account number below:</h5>
                                         <h5>Bank Name: <strong>Wema Bank</strong> </h5>
                                         <h5>Account Name: <strong>Raven - IKAMBOR OTINYIA</strong> </h5>
                                         <h5>Account Number: <strong id="account">7790877006</strong> </h5>
@@ -209,3 +194,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    function copyToClipboard(elementID) {
+        var element = document.getElementById(elementID);
+
+        // Execute the copy command using the Clipboard API
+        navigator.clipboard.writeText(element.innerText)
+            .then(function() {
+                alert("Copied to clipboard!");
+            })
+            .catch(function(error) {
+                alert("Failed to copy to clipboard: " + error);
+            });
+  }
+</script>

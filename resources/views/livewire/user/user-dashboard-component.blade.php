@@ -257,23 +257,7 @@
                                                 <strong class="header-title mt-0 mb-3">Referral Link</strong>
                                             </div>
 
-                                            <script>
-                                                function copyToClipboard() {
-                                                    var input = document.getElementById("referral_link");
 
-                                                    // Create a range object and select the input text
-                                                    input.select();
-
-                                                    // Execute the copy command using the Clipboard API
-                                                    navigator.clipboard.writeText(input.value)
-                                                    .then(function() {
-                                                        alert("Copied to clipboard!");
-                                                    })
-                                                    .catch(function(error) {
-                                                        alert("Failed to copy to clipboard: " + error);
-                                                    });
-                                              }
-                                            </script>
                                             <div class="widget-box-2 card-body">
                                                 <div class="row">
 
@@ -363,3 +347,22 @@
 
     </div>
 </div>
+
+
+<script>
+    function copyToClipboard() {
+        var input = document.getElementById("referral_link");
+
+        // Create a range object and select the input text
+        input.select();
+
+        // Execute the copy command using the Clipboard API
+        navigator.clipboard.writeText(input.value)
+        .then(function() {
+            alert("Copied to clipboard!");
+        })
+        .catch(function(error) {
+            alert("Failed to copy to clipboard: " + error);
+        });
+  }
+</script>

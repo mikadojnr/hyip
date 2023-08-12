@@ -35,7 +35,7 @@ class UserReferralsComponent extends Component
         $bonusBalance = round($this->getCurrentBonusBalance(), 2);
 
         $this->validate([
-            'amount' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:50|max:'.$bonusBalance,
+            'amount' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:20|max:'.$bonusBalance,
             'mode' => 'required'
 
         ]);
@@ -47,7 +47,7 @@ class UserReferralsComponent extends Component
         $user_details = UserDetail::where('user_id', Auth::user()->id)->exists();
 
         if ($user_details) {
-            if ($bonusBalance > 50)
+            if ($bonusBalance >= 20)
             {
                 if ($this->amount <= $bonusBalance) {
 
@@ -65,7 +65,7 @@ class UserReferralsComponent extends Component
                 }
 
             }
-            session()->flash('error_message', 'Minimum withdrawal is at 50 USDT');
+            session()->flash('error_message', 'Minimum withdrawal is at 20 USDT');
             return redirect()->route('user.referrals');
         }
         else {

@@ -10,136 +10,7 @@
                                     <div class="form-wrap bg-white">
                                         <h4 class="btm-sep pb-3 mb-5">Register</h4>
 
-                                        <script>
 
-                                                // Retrieve the form element
-                                                var form = document.getElementById('regform');
-
-                                                // Add a submit event listener to the form
-                                                form.addEventListener('submit', function(event) {
-
-                                                // Retrieve the name element
-                                                var name = document.getElementById('name');
-                                                if (name.value == '') {
-                                                    event.preventDefault();
-                                                    alert("Please enter your full name!");
-                                                    document.name.focus();
-                                                }
-
-                                                // Retrieve the email element
-                                                var email = document.getElementById('email');
-                                                if (!email.value == '') {
-                                                    event.preventDefault();
-                                                    alert("Please enter your email!");
-                                                    document.email.focus();
-                                                    return false;
-                                                }
-                                                if (!email.value.match(/^[A-Za-z0-9_\-]+$/@)) {
-                                                    event.preventDefault();
-                                                    alert("For email you should use English letters and digits only!");
-                                                    document.email.focus();
-                                                    return false;
-                                                }
-
-                                                // Retrieve the password element
-                                                var password = document.getElementById('password');
-                                                var password_confirmation = document.getElementById('password_confirmation');
-
-                                                if(password !== password_confirmation) {
-                                                    event.preventDefault();
-                                                    alert("Password do not match!")
-                                                }
-
-                                                // Retrieve the checkbox element
-                                                var checkbox = document.getElementById('agree');
-                                                if (!checkbox.checked) {
-                                                    // Prevent the form submission
-                                                    event.preventDefault();
-
-                                                    // Display an error message or perform any desired action
-                                                    alert('You have to agree with the Terms and Conditions!');
-                                                }
-                                                });
-
-                                            // function checkform() {
-                                            //     if (document.regform.name.value == '') {
-                                            //         alert("Please enter your full name!");
-                                            //         document.regform.name.focus();
-                                            //         return false;
-                                            //     }
-
-
-
-                                            //     if (document.regform.password.value == '') {
-                                            //         alert("Please enter your password!");
-                                            //         document.regform.password.focus();
-                                            //         return false;
-                                            //     }
-                                            //     if (document.regform.password.value != document.regform.password_confirmation.value) {
-                                            //         alert("Please check your password!");
-                                            //         document.regform.password_confirmation.focus();
-                                            //         return false;
-                                            //     }
-
-
-                                            //     if (document.regform.email.value == '') {
-                                            //         alert("Please enter your e-mail address!");
-                                            //         document.regform.email.focus();
-                                            //         return false;
-                                            //     }
-                                            //     if (document.regform.email.value != document.regform.email1.value) {
-                                            //         alert("Please retupe your e-mail!");
-                                            //         document.regform.email.focus();
-                                            //         return false;
-                                            //     }
-
-                                            //     // for (i in document.regform.elements) {
-                                            //     //     f = document.regform.elements[i];
-                                            //     //     if (f.name && f.name.match(/^pay_account/)) {
-                                            //     //     if (f.value == '') continue;
-                                            //     //     var notice = f.getAttribute('data-validate-notice');
-                                            //     //     var invalid = 0;
-                                            //     //     if (f.getAttribute('data-validate') == 'regexp') {
-                                            //     //         var re = new RegExp(f.getAttribute('data-validate-regexp'));
-                                            //     //         if (!f.value.match(re)) {
-                                            //     //         invalid = 1;
-                                            //     //         }
-                                            //     //     } else if (f.getAttribute('data-validate') == 'email') {
-                                            //     //         var re = /^[^\@]+\@[^\@]+\.\w{2,4}$/;
-                                            //     //         if (!f.value.match(re)) {
-                                            //     //         invalid = 1;
-                                            //     //         }
-                                            //     //     }
-                                            //     //     if (invalid) {
-                                            //     //         alert('Invalid account format. Expected '+notice);
-                                            //     //         f.focus();
-                                            //     //         return false;
-                                            //     //     }
-                                            //     //     }
-                                            //     // }
-
-                                            //     if (!document.regform.agree.checked) {
-                                            //         alert("You have to agree with the Terms and Conditions!");
-                                            //         return false;
-                                            //     }
-
-                                            //     return true;
-                                            // }
-
-                                            function IsNumeric(sText) {
-                                            var ValidChars = "0123456789";
-                                            var IsNumber=true;
-                                            var Char;
-                                            if (sText == '') return false;
-                                            for (i = 0; i < sText.length && IsNumber == true; i++) {
-                                                Char = sText.charAt(i);
-                                                if (ValidChars.indexOf(Char) == -1) {
-                                                IsNumber = false;
-                                                }
-                                            }
-                                            return IsNumber;
-                                            }
-                                        </script>
 
                                         <x-validation-errors class="mb-4" style="color: red;"/>
 
@@ -232,3 +103,135 @@
         </section>
         <!-- END Section Sign Up -->
 </div>
+
+
+<script>
+
+    // Retrieve the form element
+    var form = document.getElementById('regform');
+
+    // Add a submit event listener to the form
+    form.addEventListener('submit', function(event) {
+
+    // Retrieve the name element
+    var name = document.getElementById('name');
+    if (name.value == '') {
+        event.preventDefault();
+        alert("Please enter your full name!");
+        document.name.focus();
+    }
+
+    // Retrieve the email element
+    var email = document.getElementById('email');
+    if (!email.value == '') {
+        event.preventDefault();
+        alert("Please enter your email!");
+        document.email.focus();
+        return false;
+    }
+    if (!email.value.match(/^[A-Za-z0-9_\-]+$/@)) {
+        event.preventDefault();
+        alert("For email you should use English letters and digits only!");
+        document.email.focus();
+        return false;
+    }
+
+    // Retrieve the password element
+    var password = document.getElementById('password');
+    var password_confirmation = document.getElementById('password_confirmation');
+
+    if(password !== password_confirmation) {
+        event.preventDefault();
+        alert("Password do not match!")
+    }
+
+    // Retrieve the checkbox element
+    var checkbox = document.getElementById('agree');
+    if (!checkbox.checked) {
+        // Prevent the form submission
+        event.preventDefault();
+
+        // Display an error message or perform any desired action
+        alert('You have to agree with the Terms and Conditions!');
+    }
+    });
+
+// function checkform() {
+//     if (document.regform.name.value == '') {
+//         alert("Please enter your full name!");
+//         document.regform.name.focus();
+//         return false;
+//     }
+
+
+
+//     if (document.regform.password.value == '') {
+//         alert("Please enter your password!");
+//         document.regform.password.focus();
+//         return false;
+//     }
+//     if (document.regform.password.value != document.regform.password_confirmation.value) {
+//         alert("Please check your password!");
+//         document.regform.password_confirmation.focus();
+//         return false;
+//     }
+
+
+//     if (document.regform.email.value == '') {
+//         alert("Please enter your e-mail address!");
+//         document.regform.email.focus();
+//         return false;
+//     }
+//     if (document.regform.email.value != document.regform.email1.value) {
+//         alert("Please retupe your e-mail!");
+//         document.regform.email.focus();
+//         return false;
+//     }
+
+//     // for (i in document.regform.elements) {
+//     //     f = document.regform.elements[i];
+//     //     if (f.name && f.name.match(/^pay_account/)) {
+//     //     if (f.value == '') continue;
+//     //     var notice = f.getAttribute('data-validate-notice');
+//     //     var invalid = 0;
+//     //     if (f.getAttribute('data-validate') == 'regexp') {
+//     //         var re = new RegExp(f.getAttribute('data-validate-regexp'));
+//     //         if (!f.value.match(re)) {
+//     //         invalid = 1;
+//     //         }
+//     //     } else if (f.getAttribute('data-validate') == 'email') {
+//     //         var re = /^[^\@]+\@[^\@]+\.\w{2,4}$/;
+//     //         if (!f.value.match(re)) {
+//     //         invalid = 1;
+//     //         }
+//     //     }
+//     //     if (invalid) {
+//     //         alert('Invalid account format. Expected '+notice);
+//     //         f.focus();
+//     //         return false;
+//     //     }
+//     //     }
+//     // }
+
+//     if (!document.regform.agree.checked) {
+//         alert("You have to agree with the Terms and Conditions!");
+//         return false;
+//     }
+
+//     return true;
+// }
+
+function IsNumeric(sText) {
+var ValidChars = "0123456789";
+var IsNumber=true;
+var Char;
+if (sText == '') return false;
+for (i = 0; i < sText.length && IsNumber == true; i++) {
+    Char = sText.charAt(i);
+    if (ValidChars.indexOf(Char) == -1) {
+    IsNumber = false;
+    }
+}
+return IsNumber;
+}
+</script>

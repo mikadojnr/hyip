@@ -63,23 +63,7 @@
                                 </div>
                             </div>
 
-                            <script>
-                                function copyToClipboard() {
-                                    var input = document.getElementById("ref_code");
 
-                                    // Create a range object and select the input text
-                                    input.select();
-
-                                    // Execute the copy command using the Clipboard API
-                                    navigator.clipboard.writeText(input.value)
-                                    .then(function() {
-                                        alert("Copied to clipboard!");
-                                    })
-                                    .catch(function(error) {
-                                        alert("Failed to copy to clipboard: " + error);
-                                    });
-                              }
-                            </script>
 
                             @if(Auth::user()->utype === 'USR')
                                 <div class="col-sm-12 col-md-4">
@@ -258,3 +242,21 @@
 
     </div>
 </div>
+
+<script>
+    function copyToClipboard() {
+        var input = document.getElementById("ref_code");
+
+        // Create a range object and select the input text
+        input.select();
+
+        // Execute the copy command using the Clipboard API
+        navigator.clipboard.writeText(input.value)
+        .then(function() {
+            alert("Copied to clipboard!");
+        })
+        .catch(function(error) {
+            alert("Failed to copy to clipboard: " + error);
+        });
+  }
+</script>
