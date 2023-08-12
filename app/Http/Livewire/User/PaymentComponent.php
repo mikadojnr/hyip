@@ -105,7 +105,7 @@ class PaymentComponent extends Component
             $get_imageName = Carbon::now()->timestamp.'.'.$this->get_image->extension();
 
             // copy the image to the /proofs folder &change the name
-            $this->get_image->storeAs('proofs',$get_imageName);
+            $this->get_image->storeAs('/proofs',$get_imageName);
 
             // save the image name on DB
             $transaction->proof = $get_imageName;

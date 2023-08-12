@@ -34,15 +34,22 @@ return [
             'driver' => 'local',
             // 'root' => storage_path('app'),
             // 'throw' => false,
-            'root' => public_path('assets/images'),
+            'root' => public_path('/images'),
         ],
+
+        // 'public' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public'),
+        //     'url' => env('APP_URL').'/storage',
+        //     'visibility' => 'public',
+        //     // 'throw' => false,
+        // ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path(),
+            'url' => env('APP_URL').'/',
             'visibility' => 'public',
-            'throw' => false,
         ],
 
         's3' => [

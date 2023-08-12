@@ -63,7 +63,7 @@ class AdminTransactionDetailComponent extends Component
             ->where('user_id', Auth::user()->id)
             ->count();
 
-            if ($referees) {
+            if ($referees->count() > 0) {
                 // Loop through all the records
                 foreach ($referees as $referee) {
                     // Check if there is a value on the record or not
@@ -89,7 +89,8 @@ class AdminTransactionDetailComponent extends Component
             }
 
             session()->flash('message', 'Transaction status updated successfully!');
-            return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+            return redirect()->route('admin.transaction-details', ['transaction_id' => $record->id]);
+
         }
     }
 
@@ -119,7 +120,7 @@ class AdminTransactionDetailComponent extends Component
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
-        return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+            return redirect()->route('admin.transaction-details', ['transaction_id' => $record->id]);
 
         }
     }
@@ -151,7 +152,8 @@ class AdminTransactionDetailComponent extends Component
             ]);
 
             session()->flash('message', 'Withdrawal approved successfully!');
-            return redirect()->route('admin.transaction-details', ['transaction_id' => $transaction_id]);
+            return redirect()->route('admin.transaction-details', ['transaction_id' => $record->id]);
+
 
         }
     }

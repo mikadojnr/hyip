@@ -34,7 +34,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-body">
-          <img src="{{ asset('assets/images/proofs')}}/{{ $transaction->proof }}" class="img-fluid" alt="Payment Proof">
+          <img src="{{ asset('images/proofs')}}/{{ $transaction->proof }}" class="img-fluid" alt="Payment Proof">
         </div>
       </div>
     </div>
@@ -139,7 +139,7 @@
                             <strong>Payment Proof</strong>
                             @if( $transaction->proof )
                                 <div>
-                                    <img src="{{ asset('assets/images/proofs')}}/{{ $transaction->proof }}" alt="Pay proof" class="img-thumbnail" data-toggle="modal" data-target="#imageModal" width="100"/>
+                                    <img src="{{ asset('images/proofs')}}/{{ $transaction->proof }}" alt="Pay proof" class="img-thumbnail" data-toggle="modal" data-target="#imageModal" width="100"/>
                                 </div>
 
                             @endif
