@@ -88,7 +88,7 @@ class PaymentComponent extends Component
 
             // validate the image upload field
             $this->validate([
-                'get_image' => 'required|image|max:2048', // Validate image file format and size
+                'get_image' => 'required|mimes:jpeg,png,jpg,gif|image|max:2048', // Validate image file format and size
             ]);
 
             // create a new record in the Transaction table
@@ -101,14 +101,11 @@ class PaymentComponent extends Component
             $transaction->investment_plan_id = $this->get_planId;
             $transaction->description = 'payment';
 
-            // Process image name to save on DB based on the timestamp
-            $get_imageName = Carbon::now()->timestamp.'.'.$this->get_image->extension();
-
-            // copy the image to the /proofs folder &change the name
-            $this->get_image->storeAs('/proofs',$get_imageName);
-
-            // save the image name on DB
-            $transaction->proof = $get_imageName;
+            if ($this->get_image) {
+                $imageName = time().'.'.$this->get_image->getClientOriginalExtension();
+                $this->get_image->storeAs('proofs', $imageName, 'public');
+                $transaction->proof = $imageName;
+            }
 
             $transaction->save();
 
